@@ -14,6 +14,4 @@
 - Remove crap from initial Vite commit
 - Knip
 - Circular dependency checker
-- GH lint action
-- GH build action
 - GH pages action

@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint:tsc": "tsc --noEmit",
+    "build": "tsc --build && vite build",
+    "lint:tsc": "tsc --build --noEmit",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check .",
     "preview": "vite preview"
