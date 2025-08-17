@@ -22,6 +22,25 @@ export default tseslint.config([
     ],
     rules: {
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+      '@typescript-eslint/dot-notation': [
+        'error',
+        {
+          allowIndexSignaturePropertyAccess: true,
+        },
+      ],
+      '@typescript-eslint/restrict-template-expressions': [
+        'error',
+        {
+          allow: [{ name: ['Error', 'URL', 'URLSearchParams'], from: 'lib' }],
+          allowAny: false,
+          allowArray: false,
+          allowBoolean: true,
+          allowNever: false,
+          allowNullish: true,
+          allowNumber: true,
+          allowRegExp: true,
+        },
+      ],
     },
     languageOptions: {
       ecmaVersion: 2020,

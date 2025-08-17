@@ -15,3 +15,4 @@
 - Knip
 - Circular dependency checker
 - GH pages action
+- Strongly typed CSS modules

@@ -7,7 +7,8 @@ export default defineConfig({
   plugins: [
     react(),
     patchCssModules({
-      generateSourceTypes: true,
+      // @todo Had to comment this out because it was randomly not generating types for some reason
+      // generateSourceTypes: true,
     }),
   ],
 });
