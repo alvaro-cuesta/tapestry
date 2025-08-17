@@ -1,108 +1,115 @@
-import { useRef, useState } from 'react';
-import './App.css';
-import reactLogo from './assets/react.svg';
-import type { FromPatternWorkerMessage } from './patterns';
-import CirclePattern from './patterns/circle?worker';
-import viteLogo from '/vite.svg';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import styles from './App.module.css';
+import { generateBackground } from './generator';
+import { PATTERNS, type Pattern } from './generator/patterns';
+import useWindowSize from './hooks/useWindowSize';
+import { randInt } from './utils/rand';
 
 export function App() {
-  const workerRef = useRef<Worker | null>(null);
-  if (!workerRef.current) {
-    workerRef.current = new CirclePattern();
-    workerRef.current.onmessage = (
-      event: MessageEvent<FromPatternWorkerMessage>,
-    ) => {
-      switch (event.data.type) {
-        case 'success': {
-          const { bitmap } = event.data;
-          console.log('Worker sent bitmap:', bitmap);
-          const canvas = document.createElement('canvas');
-          canvas.width = bitmap.width;
-          canvas.height = bitmap.height;
-          const ctx = canvas.getContext('2d');
-          if (ctx) {
-            ctx.drawImage(bitmap, 0, 0);
-            document.body.appendChild(canvas);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
+
+  const [patternIdx, setPatternIdx] = useState(0);
+  const [seed, setSeed] = useState(() => randInt());
+  const { width, height } = useWindowSize();
+
+  const generate = useCallback(
+    (pattern: Pattern, width: number, height: number, seed: number) => {
+      abortRef.current?.abort();
+      abortRef.current = new AbortController();
+
+      generateBackground(pattern.WorkerConstructor, {
+        width,
+        height,
+        seed,
+        signal: abortRef.current.signal,
+      })
+        .then((bitmap) => {
+          const canvas = canvasRef.current;
+          if (!canvas) {
+            console.error('Canvas element not found');
+            return;
           }
-          return;
-        }
-        case 'error': {
-          const { error } = event.data;
-          console.error('Worker error:', error);
-          // Display the error in an alert or log it
-          // You can also handle it in the UI if needed
-          alert(`Error from worker: ${error}`);
-          // Optionally, you could log it to the console or display it in the UI
-          // For example:
-          // document.body.innerHTML += `<p>Error: ${error}</p>`;
-          return;
-        }
-        default: {
-          // Handle unexpected messages
-          console.warn('Unexpected message from worker:', event.data);
-        }
+
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            console.error('Failed to get canvas context');
+            return;
+          }
+
+          requestAnimationFrame(() => {
+            canvas.width = bitmap.width;
+            canvas.height = bitmap.height;
+            ctx.drawImage(bitmap, 0, 0);
+          });
+        })
+        .catch((error: unknown) => {
+          console.error('Error generating pattern:', error);
+          alert(
+            `Error generating pattern: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          );
+        });
+    },
+    [],
+  );
+
+  useEffect(() => {
+    const pattern = PATTERNS[patternIdx];
+
+    if (!pattern) {
+      console.error('Pattern not found for index:', patternIdx);
+      return;
+    }
+
+    generate(pattern, width, height, seed);
+  }, [patternIdx, width, height, seed, generate]);
+
+  const handleRegenerateClick = useCallback(() => {
+    setSeed(randInt());
+  }, []);
+
+  const handlePatternChange = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const newIndex = Number(event.target.value);
+      if (newIndex >= 0 && newIndex < PATTERNS.length) {
+        setPatternIdx(newIndex);
+      } else {
+        console.error('Invalid pattern index:', newIndex);
       }
-    };
-  }
-
-  const worker = workerRef.current;
-
-  const [count, setCount] = useState(0);
-
-  function handleClick() {
-    console.log('Button clicked, sending message to worker');
-    worker.postMessage({ width: 800, height: 600 });
-  }
+    },
+    [],
+  );
 
   return (
     <>
-      <button
-        type="button"
-        onClick={handleClick}
-      >
-        Click me
-      </button>
-      <div>
-        <a
-          href="https://vite.dev"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <img
-            src={viteLogo}
-            className="logo"
-            alt="Vite logo"
-          />
-        </a>
-        <a
-          href="https://react.dev"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <img
-            src={reactLogo}
-            className="logo react"
-            alt="React logo"
-          />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
+      <div className={styles.App}>
         <button
           type="button"
-          onClick={() => {
-            setCount((count) => count + 1);
-          }}
+          onClick={handleRegenerateClick}
         >
-          count is {count}
+          Regenerate
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+
+        <select
+          value={patternIdx}
+          onChange={handlePatternChange}
+        >
+          ç
+          {PATTERNS.map((pattern, index) => (
+            <option
+              // eslint-disable-next-line react-x/no-array-index-key -- we only have indices as keys and they are stable
+              key={index}
+              value={index}
+            >
+              {pattern.name}
+            </option>
+          ))}
+        </select>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <canvas
+        ref={canvasRef}
+        className={styles.canvas}
+      />
     </>
   );
 }

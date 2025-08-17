@@ -23,8 +23,8 @@ npm run lint:prettier
 ### Things to do
 
 - See [`TODO.md`](TODO.md) for outstanding gerneral tasks.
-- You can add new patterns in [`/src/patterns/`](./src/patterns/). See e.g.
-  [`/src/patterns/circle/`](./src/patterns/circle/).
+- You can add new patterns in [`/src/generator/patterns/`](./src/generator/patterns/). See e.g.
+  [`/src/generator/patterns/circle/`](./src/generator/patterns/circle/).
 
 ## Build
 

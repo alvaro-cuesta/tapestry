@@ -1,11 +1,4 @@
-export type ToPatternWorkerMessage = {
-  width: number;
-  height: number;
-};
-
-export type FromPatternWorkerMessage =
-  | { type: 'success'; bitmap: ImageBitmap }
-  | { type: 'error'; error: string };
+import type { ToPatternWorkerMessage } from '.';
 
 export const registerPatternWorker = (
   cb: (message: ToPatternWorkerMessage) => ImageBitmap,
