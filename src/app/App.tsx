@@ -2,34 +2,27 @@ import { useCallback, useState } from 'react';
 import styles from '../app/App.module.css';
 import { PATTERNS } from '../generator/patterns';
 import useWindowSize from '../hooks/useWindowSize';
-import { randInt } from '../utils/rand';
+import { randInt32 } from '../utils/rand';
 import { BackgroundCanvas } from './BackgroundCanvas';
 
 export function App() {
   const [patternIdx, setPatternIdx] = useState(0);
-  const [seed, setSeed] = useState(() => randInt());
+  const [seed, setSeed] = useState(() => randInt32());
   const { width, height } = useWindowSize();
 
   const handleRegenerateClick = useCallback(() => {
-    setSeed(randInt());
+    setSeed(randInt32());
   }, []);
 
   const handlePatternChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       const newIndex = Number(event.target.value);
-      if (newIndex >= 0 && newIndex < PATTERNS.length) {
-        setPatternIdx(newIndex);
-      } else {
-        console.error('Invalid pattern index:', newIndex);
-      }
+      setPatternIdx(newIndex);
     },
     [],
   );
 
-  const pattern = PATTERNS[patternIdx];
-  if (!pattern) {
-    throw new Error(`Pattern not found for index: ${patternIdx}`);
-  }
+  const pattern = PATTERNS[patternIdx]!;
 
   return (
     <>

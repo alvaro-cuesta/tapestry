@@ -1,5 +1,5 @@
+import { registerPatternWorker } from '..';
 import { newRand } from '../../../utils/rand';
-import { registerPatternWorker } from '../worker';
 
 registerPatternWorker(({ width, height, seed }) => {
   const rand = newRand(seed);
@@ -17,7 +17,7 @@ registerPatternWorker(({ width, height, seed }) => {
   const yOffset = rand() * 100 - 50;
 
   ctx.shadowColor = 'black';
-  ctx.shadowBlur = 10;
+  ctx.shadowBlur = 100;
   ctx.shadowOffsetX = xOffset;
   ctx.shadowOffsetY = yOffset;
   ctx.fillStyle = 'white';
@@ -27,7 +27,7 @@ registerPatternWorker(({ width, height, seed }) => {
   ctx.shadowColor = 'transparent';
   ctx.strokeStyle = 'grey';
   ctx.lineWidth = 5;
-  ctx.stroke();
+  ctx.strokeRect(width / 2 - 50 + xOffset, height / 2 - 50 + yOffset, 100, 100);
 
   return offscreen.transferToImageBitmap();
 });

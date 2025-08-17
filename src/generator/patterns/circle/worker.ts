@@ -1,5 +1,5 @@
+import { registerPatternWorker } from '..';
 import { newRand } from '../../../utils/rand';
-import { registerPatternWorker } from '../worker';
 
 registerPatternWorker(({ width, height, seed }) => {
   const rand = newRand(seed);
@@ -17,7 +17,7 @@ registerPatternWorker(({ width, height, seed }) => {
   const yOffset = rand() * 100 - 50;
 
   ctx.shadowColor = 'black';
-  ctx.shadowBlur = 10;
+  ctx.shadowBlur = 100;
   ctx.shadowOffsetX = xOffset;
   ctx.shadowOffsetY = yOffset;
   ctx.fillStyle = 'white';

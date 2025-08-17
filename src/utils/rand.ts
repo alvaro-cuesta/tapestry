@@ -1,5 +1,5 @@
-export function randInt() {
-  return (Math.random() * 2 ** 32) >>> 0;
+export function randInt32() {
+  return Math.floor(Math.random() * 2 ** 32);
 }
 
 // SplitMix32 from https://stackoverflow.com/a/47593316

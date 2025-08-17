@@ -64,9 +64,14 @@ export const BackgroundCanvas = ({
   }, [pattern, width, height, seed, draw]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className={styles['canvas']}
-    />
+    <div
+      className={styles['canvas-container']}
+      style={{ width, height }}
+    >
+      <canvas
+        ref={canvasRef}
+        className={styles['canvas']}
+      />
+    </div>
   );
 };
