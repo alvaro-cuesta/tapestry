@@ -33,7 +33,9 @@ export function App() {
     [],
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- we know the index is always valid since it's a <select> on the list itself
   const pattern = PATTERNS[patternIdx]!;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- we know the index is always valid since it's a <select> on the list itself
   const postFx = POST_FXS[postFxIdx]!;
 
   return (
