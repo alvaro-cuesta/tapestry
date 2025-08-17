@@ -1,8 +1,11 @@
 import type {
   FromPatternWorkerMessage,
   ToPatternWorkerMessage,
-} from './patterns';
-import type { FromPostFxWorkerMessage, ToPostFxWorkerMessage } from './postfxs';
+} from './patterns/worker';
+import type {
+  FromPostFxWorkerMessage,
+  ToPostFxWorkerMessage,
+} from './postfxs/worker';
 
 type GenerateBackgroundPatternOptions = {
   width: number;

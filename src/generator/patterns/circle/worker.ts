@@ -1,5 +1,5 @@
-import { registerPatternWorker } from '..';
 import { newRand } from '../../../utils/rand';
+import { registerPatternWorker } from '../worker';
 
 registerPatternWorker(({ width, height, seed }) => {
   const rand = newRand(seed);

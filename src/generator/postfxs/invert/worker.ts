@@ -1,4 +1,4 @@
-import { registerPostFxWorker } from '..';
+import { registerPostFxWorker } from '../worker';
 
 registerPostFxWorker(({ bitmap }) => {
   const offscreen = new OffscreenCanvas(bitmap.width, bitmap.height);
