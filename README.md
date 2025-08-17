@@ -1,0 +1,34 @@
+# Tapestry: the best background generator
+
+Generate backgrounds for your mobile phone or desktop at a click's distance. Supports multiple beautiful patterns,
+custom palettes, post-processing effects...
+
+Try it on https://alvaro-cuesta.github.io/tapestry/
+
+## Development
+
+```sh
+npm run dev
+```
+
+Run lints using:
+
+```sh
+npm run lint:tsc
+npm run lint:eslint
+npm run lint:prettier
+# Or just let your IDE do the work with Eslint/Prettier integrations
+```
+
+### Things to do
+
+- See [`TODO.md`](TODO.md) for outstanding gerneral tasks.
+- You can add new patterns in [`/src/patterns/`](./src/patterns/). See e.g.
+  [`/src/patterns/circle/`](./src/patterns/circle/).
+
+## Build
+
+```sh
+npm run build
+npm run preview
+```
