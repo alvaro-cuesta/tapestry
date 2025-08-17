@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { generateBackground } from '../generator';
 import type { Pattern } from '../generator/patterns';
+import type { PostFx } from '../generator/postfxs';
 import styles from './BackgroundCanvas.module.css';
 
 type BackgroundCanvasProps = {
   pattern: Pattern;
+  postFx: PostFx;
   width: number;
   height: number;
   seed: number;
@@ -12,6 +14,7 @@ type BackgroundCanvasProps = {
 
 export const BackgroundCanvas = ({
   pattern,
+  postFx,
   width,
   height,
   seed,
@@ -20,11 +23,17 @@ export const BackgroundCanvas = ({
   const abortRef = useRef<AbortController | null>(null);
 
   const draw = useCallback(
-    (pattern: Pattern, width: number, height: number, seed: number) => {
+    (
+      pattern: Pattern,
+      postFx: PostFx,
+      width: number,
+      height: number,
+      seed: number,
+    ) => {
       abortRef.current?.abort();
       abortRef.current = new AbortController();
 
-      generateBackground(pattern.WorkerConstructor, {
+      generateBackground(pattern.WorkerConstructor, postFx.WorkerConstructor, {
         width,
         height,
         seed,
@@ -60,8 +69,8 @@ export const BackgroundCanvas = ({
   );
 
   useEffect(() => {
-    draw(pattern, width, height, seed);
-  }, [pattern, width, height, seed, draw]);
+    draw(pattern, postFx, width, height, seed);
+  }, [pattern, postFx, width, height, seed, draw]);
 
   return (
     <div

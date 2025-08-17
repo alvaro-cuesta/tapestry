@@ -25,6 +25,8 @@ npm run lint:prettier
 - See [`TODO.md`](TODO.md) for outstanding gerneral tasks.
 - You can add new patterns in [`/src/generator/patterns/`](./src/generator/patterns/). See e.g.
   [`/src/generator/patterns/circle/`](./src/generator/patterns/circle/).
+- You can add new post fxs in [`/src/generator/postfxs/`](./src/generator/postfxs/). See e.g.
+  [`/src/generator/postfxs/vignette/`](./src/generator/postfxs/vignette/).
 
 ## Build
 

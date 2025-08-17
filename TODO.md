@@ -3,6 +3,7 @@
 ## Features
 
 - Add thumbnails to patterns
+- Allow applying multiple post fxs in series
 
 ## QoL/Cosmetics
 
