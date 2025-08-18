@@ -21,6 +21,8 @@
 - Circular dependency checker
 - GH pages action
 - Strongly typed CSS modules
+- Ensure that vendor CSS is also split
+- CSS source maps?
 
 ## Research
 
