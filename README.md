@@ -6,7 +6,7 @@ patterns, custom palettes, post-processing effects...
 Try it on https://tapestry.cuesta.dev/
 
 > [!IMPORTANT]
-> Currently _best_ is **not guaranteed**. Actually not even wallpaper generator\_ is guaranteed. This is just a very
+> Currently _best_ is **not guaranteed**. Actually not even _wallpaper generator_ is guaranteed. This is just a very
 > early work-in-progress!
 
 ## Development
@@ -26,7 +26,7 @@ npm run lint:prettier
 
 ### Things to do
 
-- See [`TODO.md`](TODO.md) for outstanding gerneral tasks.
+- See [`TODO.md`](TODO.md) for outstanding general tasks.
 - You can add new patterns in [`/src/generator/patterns/`](./src/generator/patterns/). See e.g.
   [`/src/generator/patterns/circle/`](./src/generator/patterns/circle/).
 - You can add new post fxs in [`/src/generator/postfxs/`](./src/generator/postfxs/). See e.g.
