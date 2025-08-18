@@ -45,6 +45,11 @@ export const WallpaperCanvas = ({
         });
       }
 
+      const dpr = window.devicePixelRatio || 1;
+
+      const realWidth = Math.floor(width * dpr);
+      const realHeight = Math.floor(height * dpr);
+
       abortRef.current?.abort();
       const abortController = new AbortController();
       abortRef.current = abortController;
@@ -58,8 +63,8 @@ export const WallpaperCanvas = ({
 
       generateWallpaper(pattern.WorkerConstructor, postFx.WorkerConstructor, {
         taskId,
-        width,
-        height,
+        width: realWidth,
+        height: realHeight,
         seed,
         signal,
       })
@@ -75,8 +80,8 @@ export const WallpaperCanvas = ({
 
             abortRef.current = null;
 
-            canvas.width = width;
-            canvas.height = height;
+            canvas.width = realWidth;
+            canvas.height = realHeight;
 
             const ctx = canvas.getContext('2d');
             if (!ctx) {
@@ -109,6 +114,7 @@ export const WallpaperCanvas = ({
       <canvas
         ref={canvasRef}
         className={styles['canvas']}
+        style={{ width, height }}
       />
     </div>
   );
