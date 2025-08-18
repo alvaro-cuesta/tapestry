@@ -27,6 +27,17 @@ export default defineConfig(({ mode }) => {
     build: {
       sourcemap: true,
       minify: 'terser',
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+
+            return null;
+          },
+        },
+      },
     },
   };
 });
