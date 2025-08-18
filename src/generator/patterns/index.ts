@@ -1,5 +1,5 @@
 import type { TaskId } from '../utils';
-import { CirclePattern } from './circle';
+import { CirclesPattern } from './circles';
 import { SquarePattern } from './square';
 import type {
   FromPatternWorkerMessage,
@@ -55,4 +55,4 @@ export type Pattern = {
   WorkerConstructor: new () => Worker;
 };
 
-export const PATTERNS: readonly Pattern[] = [CirclePattern, SquarePattern];
+export const PATTERNS: readonly Pattern[] = [CirclesPattern, SquarePattern];

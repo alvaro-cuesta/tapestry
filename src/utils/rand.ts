@@ -1,7 +1,3 @@
-export function randInt32() {
-  return Math.floor(Math.random() * 2 ** 32);
-}
-
 // SplitMix32 from https://stackoverflow.com/a/47593316
 export function newRand(seed: number) {
   let a = seed;
@@ -16,4 +12,28 @@ export function newRand(seed: number) {
 
     return ((t = t ^ (t >>> 15)) >>> 0) / 4294967296;
   };
+}
+
+export function randInt(
+  min = 0,
+  max = Number.MAX_SAFE_INTEGER,
+  rand: () => number = Math.random,
+) {
+  return Math.floor(rand() * (max - min + 1)) + min;
+}
+
+export function randItem<T>(
+  arr: [T, ...T[]] | readonly [T, ...T[]],
+  rand: () => number,
+): T;
+export function randItem<T>(
+  arr: T[] | readonly T[],
+  rand: () => number,
+): T | undefined;
+export function randItem<T>(
+  arr: T[] | readonly T[],
+  rand: () => number,
+): T | undefined {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return arr[randInt(0, arr.length - 1, rand)]!;
 }

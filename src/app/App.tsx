@@ -3,18 +3,18 @@ import styles from '../app/App.module.css';
 import { PATTERNS } from '../generator/patterns';
 import { POST_FXS } from '../generator/postfxs';
 import useWindowSize from '../hooks/useWindowSize';
-import { randInt32 } from '../utils/rand';
+import { randInt } from '../utils/rand';
 import { WallpaperCanvas } from './WallpaperCanvas';
 
 export function App() {
   const [patternIdx, setPatternIdx] = useState(0);
   const [postFxIdx, setPostFxIdx] = useState(0);
-  const [seed, setSeed] = useState(() => randInt32());
+  const [seed, setSeed] = useState(() => randInt(0, 2 ** 32));
 
   const { width, height } = useWindowSize();
 
   const handleRegenerateClick = useCallback(() => {
-    setSeed(randInt32());
+    setSeed(randInt(0, 2 ** 32));
   }, []);
 
   const handlePatternChange = useCallback(
