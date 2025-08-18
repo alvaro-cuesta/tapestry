@@ -1,7 +1,7 @@
 import type { TaskId } from '../utils';
 import { CirclesPattern } from './circles';
 import { RevolutionPattern } from './revolution';
-import { SquarePattern } from './square';
+import { StripesPattern } from './stripes';
 import type {
   FromPatternWorkerMessage,
   ToPatternWorkerMessage,
@@ -58,6 +58,6 @@ export type Pattern = {
 
 export const PATTERNS: readonly Pattern[] = [
   CirclesPattern,
-  SquarePattern,
+  StripesPattern,
   RevolutionPattern,
 ];
