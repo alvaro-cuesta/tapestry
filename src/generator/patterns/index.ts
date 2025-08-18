@@ -1,7 +1,7 @@
 import type { TaskId } from '../utils';
 import { CirclesPattern } from './circles';
-import { SquarePattern } from './square';
 import { RevolutionPattern } from './revolution';
+import { SquarePattern } from './square';
 import type {
   FromPatternWorkerMessage,
   ToPatternWorkerMessage,
