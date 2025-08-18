@@ -1,5 +1,6 @@
 import type { TaskId } from '../utils';
 import { InvertPostFx } from './invert';
+import { NonePostFx } from './none';
 import { VignettePostFx } from './vignette';
 import type { FromPostFxWorkerMessage, ToPostFxWorkerMessage } from './worker';
 
@@ -53,4 +54,8 @@ export type PostFx = {
   WorkerConstructor: new () => Worker;
 };
 
-export const POST_FXS: readonly PostFx[] = [VignettePostFx, InvertPostFx];
+export const POST_FXS: readonly PostFx[] = [
+  NonePostFx,
+  VignettePostFx,
+  InvertPostFx,
+];
