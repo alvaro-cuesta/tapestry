@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --build && vite build",
+    "build:visualize": "vite-bundle-visualizer",
     "lint:tsc": "tsc --build --noEmit",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check .",
@@ -34,6 +35,7 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.39.1",
     "vite": "^7.1.2",
+    "vite-bundle-visualizer": "^1.2.1",
     "vite-css-modules": "^1.10.0"
   }
 }
