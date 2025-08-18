@@ -87,8 +87,27 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Determine GitHub Pages BASE
+        id: set-base
+        uses: octokit/request-action@v2.4.0
+        with:
+          route: GET /repos/${{ github.repository }}/pages
+
+      - name: Set BASE env var
+        run: |
+          CNAME=$(echo "${{ steps.set-base.outputs.data }}" | jq -r '.cname // empty')
+          if [ -n "$CNAME" ]; then
+            BASE="/"
+          else
+            REPO_NAME=$(basename "${GITHUB_REPOSITORY}")
+            BASE="/${REPO_NAME}/"
+          fi
+          echo "TAPESTRY_BASE=$BASE" >> $GITHUB_ENV
+
       - name: Build static files
         run: npm run build
+        env:
+          BASE: $TAPESTRY_BASE
 
       - name: Upload static files as artifact
         id: deployment

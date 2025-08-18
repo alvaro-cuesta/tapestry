@@ -8,7 +8,11 @@ import { patchCssModules } from 'vite-css-modules';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- we want to default to '/' if BASE is empty string too
+  const base = env['BASE'] || '/';
+
   return {
+    base,
     plugins: [
       react(),
       patchCssModules({
