@@ -1,97 +1,9 @@
-import type {
-  FromPatternWorkerMessage,
-  ToPatternWorkerMessage,
-} from './patterns/worker';
-import type {
-  FromPostFxWorkerMessage,
-  ToPostFxWorkerMessage,
-} from './postfxs/worker';
-
-type GenerateBackgroundPatternOptions = {
-  width: number;
-  height: number;
-  seed: number;
-};
-
-function generateBackgroundPattern(
-  worker: Worker,
-  options: GenerateBackgroundPatternOptions,
-): Promise<ImageBitmap> {
-  return new Promise((resolve, reject) => {
-    worker.onmessage = (event: MessageEvent<FromPatternWorkerMessage>) => {
-      switch (event.data.type) {
-        case 'success': {
-          resolve(event.data.bitmap);
-          break;
-        }
-        case 'error': {
-          reject(new Error(event.data.error));
-          break;
-        }
-        default: {
-          // Handle unexpected messages
-          console.warn('Unexpected message from worker:', event.data);
-          reject(new Error('Unexpected message from worker'));
-          break;
-        }
-      }
-    };
-
-    worker.onerror = (error) => {
-      // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors -- we do not control the worker, so we can't guarantee the error type
-      reject(error.error);
-    };
-
-    worker.postMessage({
-      width: options.width,
-      height: options.height,
-      seed: options.seed,
-    } satisfies ToPatternWorkerMessage);
-  });
-}
-
-type ApplyPostFxOptions = {
-  bitmap: ImageBitmap;
-  seed: number;
-};
-
-function applyPostFx(
-  worker: Worker,
-  options: ApplyPostFxOptions,
-): Promise<ImageBitmap> {
-  return new Promise((resolve, reject) => {
-    worker.onmessage = (event: MessageEvent<FromPostFxWorkerMessage>) => {
-      switch (event.data.type) {
-        case 'success': {
-          resolve(event.data.bitmap);
-          break;
-        }
-        case 'error': {
-          reject(new Error(event.data.error));
-          break;
-        }
-        default: {
-          // Handle unexpected messages
-          console.warn('Unexpected message from worker:', event.data);
-          reject(new Error('Unexpected message from worker'));
-          break;
-        }
-      }
-    };
-
-    worker.onerror = (error) => {
-      // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors -- we do not control the worker, so we can't guarantee the error type
-      reject(error.error);
-    };
-
-    worker.postMessage({
-      bitmap: options.bitmap,
-      seed: options.seed,
-    } satisfies ToPostFxWorkerMessage);
-  });
-}
+import { generatePattern } from './patterns';
+import { applyPostFx } from './postfxs';
+import { checkForNonZeroPixels, makeLogPrefix, type TaskId } from './utils';
 
 type GenerateBackgroundOptions = {
+  taskId: TaskId;
   width: number;
   height: number;
   seed: number;
@@ -102,11 +14,19 @@ export async function generateBackground(
   PatternWorkerConstructor: new () => Worker,
   PostFxWorkerConstructor: new () => Worker,
   options: GenerateBackgroundOptions,
-): Promise<ImageBitmap> {
+): Promise<(ctx: CanvasRenderingContext2D) => void> {
+  const { taskId } = options;
+
+  const prefix = makeLogPrefix(taskId, 'GenerateBackground');
+
   const patternWorker = new PatternWorkerConstructor();
   const postFxWorker = new PostFxWorkerConstructor();
 
   function terminate() {
+    if (__DEBUG__) {
+      console.debug(prefix, 'Terminating workers');
+    }
+
     patternWorker.terminate();
     postFxWorker.terminate();
   }
@@ -114,19 +34,52 @@ export async function generateBackground(
   options.signal.addEventListener('abort', terminate);
 
   try {
-    const patternBitmap = await generateBackgroundPattern(patternWorker, {
+    const patternBitmap = await generatePattern(taskId, patternWorker, {
       width: options.width,
       height: options.height,
       seed: options.seed,
     });
-    const postFxBitmap = await applyPostFx(postFxWorker, {
+
+    if (__DEBUG__) {
+      console.debug(prefix, 'patternBitmap', patternBitmap);
+      checkForNonZeroPixels(
+        taskId,
+        'GenerateBackground',
+        'patternBitmap',
+        patternBitmap,
+      );
+    }
+
+    const postFxBitmap = await applyPostFx(taskId, postFxWorker, {
       bitmap: patternBitmap,
       seed: options.seed,
     });
 
-    return postFxBitmap;
+    if (__DEBUG__) {
+      console.debug(prefix, 'postFxBitmap', postFxBitmap);
+      checkForNonZeroPixels(
+        taskId,
+        'GenerateBackground',
+        'postFxBitmap',
+        postFxBitmap,
+      );
+    }
+
+    // This pattern is weird -- why don't we just return the bitmap and let the caller draw it?
+    //
+    // Turns out there's a subtle bug in Chrome where calling `worker.terminate()` before the bitmap is drawn might
+    // occasionally cause the bitmap to not render correctly (the receiver sees all 0 pixels). I think this is because
+    // the bitmap handle exists but the `transfer` (possibly the underlying buffer transfer) has not completed yet, and
+    // `terminate()` might be clearing the buffer as if it was still part of the worker's memory.
+    //
+    // So we return a function that the caller can call to draw the bitmap, ensuring that the transfer is complete and
+    // the bitmap is ready to be drawn, so we can call `terminate()` right after drawing. We do it like this to avoid
+    // the caller having to maange the worker lifecycle and maybe forget to call `terminate()` after drawing.
+    return function drawBitmap(ctx: CanvasRenderingContext2D) {
+      ctx.drawImage(postFxBitmap, 0, 0);
+      terminate();
+    };
   } finally {
     options.signal.removeEventListener('abort', terminate);
-    terminate();
   }
 }

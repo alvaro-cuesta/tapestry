@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { generateBackground } from '../generator';
 import type { Pattern } from '../generator/patterns';
 import type { PostFx } from '../generator/postfxs';
+import { makeLogPrefix, makeTaskId } from '../generator/utils';
 import styles from './BackgroundCanvas.module.css';
 
 type BackgroundCanvasProps = {
@@ -30,32 +31,60 @@ export const BackgroundCanvas = ({
       height: number,
       seed: number,
     ) => {
+      const taskId = makeTaskId();
+
+      const prefix = makeLogPrefix(taskId, 'BackgroundCanvas');
+
+      if (__DEBUG__) {
+        console.debug(prefix, 'Requesting draw with', {
+          pattern,
+          postFx,
+          width,
+          height,
+          seed,
+        });
+      }
+
       abortRef.current?.abort();
-      abortRef.current = new AbortController();
+      const abortController = new AbortController();
+      abortRef.current = abortController;
+      const signal = abortController.signal;
+
+      const canvas = canvasRef.current;
+      if (!canvas) {
+        console.error('Canvas element not found');
+        return;
+      }
 
       generateBackground(pattern.WorkerConstructor, postFx.WorkerConstructor, {
+        taskId,
         width,
         height,
         seed,
-        signal: abortRef.current.signal,
+        signal,
       })
-        .then((bitmap) => {
-          const canvas = canvasRef.current;
-          if (!canvas) {
-            console.error('Canvas element not found');
-            return;
-          }
-
-          const ctx = canvas.getContext('2d');
-          if (!ctx) {
-            console.error('Failed to get canvas context');
+        .then((drawBitmap) => {
+          if (signal.aborted) {
             return;
           }
 
           requestAnimationFrame(() => {
-            canvas.width = bitmap.width;
-            canvas.height = bitmap.height;
-            ctx.drawImage(bitmap, 0, 0);
+            if (signal.aborted) {
+              return;
+            }
+
+            abortRef.current = null;
+
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+              console.error('Failed to get canvas context');
+              return;
+            }
+
+            drawBitmap(ctx);
           });
         })
         .catch((error: unknown) => {

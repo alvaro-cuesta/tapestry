@@ -1,7 +1,7 @@
 import { newRand } from '../../../utils/rand';
 import { registerPatternWorker } from '../worker';
 
-registerPatternWorker(({ width, height, seed }) => {
+registerPatternWorker('Circle', ({ width, height, seed }) => {
   const rand = newRand(seed);
 
   const offscreen = new OffscreenCanvas(width, height);
@@ -12,7 +12,7 @@ registerPatternWorker(({ width, height, seed }) => {
   ctx.fillStyle = 'blue';
   ctx.fillRect(0, 0, width, height);
 
-  // Draw a white circles with a grey border and a black outer drop shadow
+  // Draw a white circle with a grey border and a black outer drop shadow
   const xOffset = rand() * 100 - 50;
   const yOffset = rand() * 100 - 50;
 

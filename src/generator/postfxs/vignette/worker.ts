@@ -1,11 +1,11 @@
 import { registerPostFxWorker } from '../worker';
 
-registerPostFxWorker(({ bitmap }) => {
+registerPostFxWorker('Vignette', ({ bitmap }) => {
   const offscreen = new OffscreenCanvas(bitmap.width, bitmap.height);
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- we just created the canvas so there's no chance of it already having a previous
   const ctx = offscreen.getContext('2d')!;
 
-  // Draw the original bitmap onto the offscreen canvas
+  // Draw the original bitmap onto the offscreen canvas for manipulation
   ctx.drawImage(bitmap, 0, 0);
   bitmap.close();
 

@@ -1,7 +1,7 @@
 import { newRand } from '../../../utils/rand';
 import { registerPatternWorker } from '../worker';
 
-registerPatternWorker(({ width, height, seed }) => {
+registerPatternWorker('Square', ({ width, height, seed }) => {
   const rand = newRand(seed);
 
   const offscreen = new OffscreenCanvas(width, height);
