@@ -21,7 +21,9 @@ Run lints using:
 npm run lint:tsc
 npm run lint:eslint
 npm run lint:prettier
-# Or just let your IDE do the work with Eslint/Prettier integrations
+# Or just let your IDE do the work with TypeScript/ESLint/Prettier integrations
+npm run lint:knip
+npm run lint:madge
 ```
 
 ### Things to do

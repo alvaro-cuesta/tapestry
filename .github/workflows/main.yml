@@ -86,12 +86,32 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run ESLint
+      - name: Run Knip
         run: npm run lint:knip
+
+  lint-madge:
+    name: Lint Madge
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Madge
+        run: npm run lint:madge
 
   build:
     name: Build static files
-    needs: [lint-tsc, lint-prettier, lint-eslint, lint-knip]
+    needs: [lint-tsc, lint-prettier, lint-eslint, lint-knip, lint-madge]
 
     runs-on: ubuntu-latest
     steps:
