@@ -88,7 +88,7 @@ jobs:
         run: npm ci
 
       - name: Build static files
-        run: npm run build -- --base=/tapestry/
+        run: npm run build
 
       - name: Upload static files as artifact
         id: deployment
