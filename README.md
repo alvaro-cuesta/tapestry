@@ -3,7 +3,7 @@
 Generate backgrounds for your mobile phone or desktop at a click's distance. Supports multiple beautiful patterns,
 custom palettes, post-processing effects...
 
-Try it on https://alvaro.cuesta.dev/tapestry/
+Try it on https://tapestry.cuesta.dev/
 
 > [!IMPORTANT]
 > Currently _best_ is not guaranteed. Actually not even _background generator_ is guaranteed. This is just a very early
