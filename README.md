@@ -5,6 +5,10 @@ custom palettes, post-processing effects...
 
 Try it on https://alvaro.cuesta.dev/tapestry/
 
+> [!IMPORTANT]
+> Currently _best_ is not guaranteed. Actually not even _background generator_ is guaranteed. This is just a very early
+> work-in-progress!
+
 ## Development
 
 ```sh
