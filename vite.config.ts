@@ -24,5 +24,8 @@ export default defineConfig(({ mode }) => {
       __DEBUG__:
         env['DEBUG'] !== undefined && env['DEBUG'] !== 'false' ? true : false,
     },
+    build: {
+      minify: 'terser',
+    },
   };
 });
