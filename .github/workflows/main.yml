@@ -87,27 +87,30 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Determine GitHub Pages BASE
-        id: set-base
+      - name: Fetch GitHub Pages information
+        id: fetch-gh-pages-info
         uses: octokit/request-action@v2.4.0
         with:
           route: GET /repos/${{ github.repository }}/pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set BASE env var
+      - name: Infer base path
+        id: infer-base-path
         run: |
-          CNAME=$(echo "${{ steps.set-base.outputs.data }}" | jq -r '.cname // empty')
+          CNAME=$(echo '${{ steps.fetch-gh-pages-info.outputs.data }}' | jq -r '.cname // empty')
           if [ -n "$CNAME" ]; then
             BASE="/"
           else
             REPO_NAME=$(basename "${GITHUB_REPOSITORY}")
             BASE="/${REPO_NAME}/"
           fi
-          echo "TAPESTRY_BASE=$BASE" >> $GITHUB_ENV
+          echo "base=$BASE" >> $GITHUB_OUTPUT
 
       - name: Build static files
         run: npm run build
         env:
-          BASE: $TAPESTRY_BASE
+          BASE: ${{ steps.infer-base-path.outputs.base }}
 
       - name: Upload static files as artifact
         id: deployment
