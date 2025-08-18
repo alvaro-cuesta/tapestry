@@ -1,4 +1,5 @@
 import type { TaskId } from '../utils';
+import { BlurPostFx } from './blur';
 import { InvertPostFx } from './invert';
 import { NonePostFx } from './none';
 import { VignettePostFx } from './vignette';
@@ -56,6 +57,7 @@ export type PostFx = {
 
 export const POST_FXS: readonly PostFx[] = [
   NonePostFx,
+  BlurPostFx,
   VignettePostFx,
   InvertPostFx,
 ];
