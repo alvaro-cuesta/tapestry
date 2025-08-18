@@ -2,7 +2,7 @@ import { generatePattern } from './patterns';
 import { applyPostFx } from './postfxs';
 import { checkForNonZeroPixels, makeLogPrefix, type TaskId } from './utils';
 
-type GenerateBackgroundOptions = {
+type GenerateWallpaperOptions = {
   taskId: TaskId;
   width: number;
   height: number;
@@ -10,14 +10,14 @@ type GenerateBackgroundOptions = {
   signal: AbortSignal;
 };
 
-export async function generateBackground(
+export async function generateWallpaper(
   PatternWorkerConstructor: new () => Worker,
   PostFxWorkerConstructor: new () => Worker,
-  options: GenerateBackgroundOptions,
+  options: GenerateWallpaperOptions,
 ): Promise<(ctx: CanvasRenderingContext2D) => void> {
   const { taskId } = options;
 
-  const prefix = makeLogPrefix(taskId, 'GenerateBackground');
+  const prefix = makeLogPrefix(taskId, 'GenerateWallpaper');
 
   const patternWorker = new PatternWorkerConstructor();
   const postFxWorker = new PostFxWorkerConstructor();
@@ -44,7 +44,7 @@ export async function generateBackground(
       console.debug(prefix, 'patternBitmap', patternBitmap);
       checkForNonZeroPixels(
         taskId,
-        'GenerateBackground',
+        'GenerateWallpaper',
         'patternBitmap',
         patternBitmap,
       );
@@ -59,7 +59,7 @@ export async function generateBackground(
       console.debug(prefix, 'postFxBitmap', postFxBitmap);
       checkForNonZeroPixels(
         taskId,
-        'GenerateBackground',
+        'GenerateWallpaper',
         'postFxBitmap',
         postFxBitmap,
       );

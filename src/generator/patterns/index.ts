@@ -6,7 +6,7 @@ import type {
   ToPatternWorkerMessage,
 } from './worker';
 
-type GenerateBackgroundPatternOptions = {
+type GeneratePatternOptions = {
   width: number;
   height: number;
   seed: number;
@@ -15,7 +15,7 @@ type GenerateBackgroundPatternOptions = {
 export function generatePattern(
   taskId: TaskId,
   worker: Worker,
-  options: GenerateBackgroundPatternOptions,
+  options: GeneratePatternOptions,
 ): Promise<ImageBitmap> {
   return new Promise((resolve, reject) => {
     worker.onmessage = ({ data }: MessageEvent<FromPatternWorkerMessage>) => {

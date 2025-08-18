@@ -12,7 +12,7 @@
 
 - [PWA](https://vite-pwa-org.netlify.app/)
 - Favicons and other crap like tiles, theme color, etc.
-- Spinner for long background generations
+- Spinner for long wallpaper generations
 
 ## Chores
 

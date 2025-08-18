@@ -1,13 +1,13 @@
-# Tapestry: the best background generator
+# Tapestry: the best wallpaper generator
 
-Generate backgrounds for your mobile phone or desktop at a click's distance. Supports multiple beautiful patterns,
-custom palettes, post-processing effects...
+Generate wallpapers/backgrounds for your mobile phone or desktop at a click's distance. Supports multiple beautiful
+patterns, custom palettes, post-processing effects...
 
 Try it on https://tapestry.cuesta.dev/
 
 > [!IMPORTANT]
-> Currently _best_ is not guaranteed. Actually not even _background generator_ is guaranteed. This is just a very early
-> work-in-progress!
+> Currently _best_ is **not guaranteed**. Actually not even wallpaper generator\_ is guaranteed. This is just a very
+> early work-in-progress!
 
 ## Development
 

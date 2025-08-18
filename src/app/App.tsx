@@ -4,7 +4,7 @@ import { PATTERNS } from '../generator/patterns';
 import { POST_FXS } from '../generator/postfxs';
 import useWindowSize from '../hooks/useWindowSize';
 import { randInt32 } from '../utils/rand';
-import { BackgroundCanvas } from './BackgroundCanvas';
+import { WallpaperCanvas } from './WallpaperCanvas';
 
 export function App() {
   const [patternIdx, setPatternIdx] = useState(0);
@@ -78,7 +78,7 @@ export function App() {
           ))}
         </select>
       </div>
-      <BackgroundCanvas
+      <WallpaperCanvas
         pattern={pattern}
         postFx={postFx}
         width={width}

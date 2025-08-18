@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { generateBackground } from '../generator';
+import { generateWallpaper } from '../generator';
 import type { Pattern } from '../generator/patterns';
 import type { PostFx } from '../generator/postfxs';
 import { makeLogPrefix, makeTaskId } from '../generator/utils';
-import styles from './BackgroundCanvas.module.css';
+import styles from './WallpaperCanvas.module.css';
 
-type BackgroundCanvasProps = {
+type WallpaperCanvasProps = {
   pattern: Pattern;
   postFx: PostFx;
   width: number;
@@ -13,13 +13,13 @@ type BackgroundCanvasProps = {
   seed: number;
 };
 
-export const BackgroundCanvas = ({
+export const WallpaperCanvas = ({
   pattern,
   postFx,
   width,
   height,
   seed,
-}: BackgroundCanvasProps) => {
+}: WallpaperCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -33,7 +33,7 @@ export const BackgroundCanvas = ({
     ) => {
       const taskId = makeTaskId();
 
-      const prefix = makeLogPrefix(taskId, 'BackgroundCanvas');
+      const prefix = makeLogPrefix(taskId, 'WallpaperCanvas');
 
       if (__DEBUG__) {
         console.debug(prefix, 'Requesting draw with', {
@@ -56,7 +56,7 @@ export const BackgroundCanvas = ({
         return;
       }
 
-      generateBackground(pattern.WorkerConstructor, postFx.WorkerConstructor, {
+      generateWallpaper(pattern.WorkerConstructor, postFx.WorkerConstructor, {
         taskId,
         width,
         height,
