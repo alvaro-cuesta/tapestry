@@ -13,7 +13,7 @@ export function App() {
 
   const { width, height } = useWindowSize();
 
-  const handleRegenerateClick = useCallback(() => {
+  const handleReseedClick = useCallback(() => {
     setSeed(randInt(0, 2 ** 32));
   }, []);
 
@@ -43,9 +43,9 @@ export function App() {
       <div className={styles['ui-container']}>
         <button
           type="button"
-          onClick={handleRegenerateClick}
+          onClick={handleReseedClick}
         >
-          Regenerate
+          🎲
         </button>
 
         <select
