@@ -1,20 +1,19 @@
 import { newRand, randInt, randItem } from '../../../utils/rand';
 import { registerPatternWorker } from '../worker';
 
-function drawDonut(
+function drawLine(
   ctx: OffscreenCanvasRenderingContext2D,
-  [x, y]: [number, number],
+  [x1, y1]: [number, number],
+  [x2, y2]: [number, number],
   {
-    radius,
-    innerRadius,
+    width,
     color,
     shadowColor,
     shadowBlur,
     shadowOffsetX,
     shadowOffsetY,
   }: {
-    radius: number;
-    innerRadius: number;
+    width: number;
     color: string;
     shadowColor: string;
     shadowBlur: number;
@@ -28,12 +27,13 @@ function drawDonut(
   ctx.shadowOffsetY = shadowOffsetY;
 
   ctx.beginPath();
-  ctx.arc(x, y, radius, 0, Math.PI * 2);
-  ctx.arc(x, y, innerRadius, Math.PI * 2, 0, true);
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
   ctx.closePath();
 
-  ctx.fillStyle = color;
-  ctx.fill();
+  ctx.lineWidth = width;
+  ctx.strokeStyle = color;
+  ctx.stroke();
 }
 
 const PALLETTE = [
@@ -49,9 +49,7 @@ const PALLETTE = [
   '#fffcf2',
 ] as const;
 
-const DONUTS = 16;
-
-registerPatternWorker('Circles', ({ width, height, seed }) => {
+registerPatternWorker('Lines', ({ width, height, seed }) => {
   const rand = newRand(seed);
 
   const offscreen = new OffscreenCanvas(width, height);
@@ -62,25 +60,27 @@ registerPatternWorker('Circles', ({ width, height, seed }) => {
   ctx.fillStyle = randItem(PALLETTE, rand);
   ctx.fillRect(0, 0, width, height);
 
+  // Fill with lines filling the canvas
   const foregroundPalette = PALLETTE.filter((color) => color !== ctx.fillStyle);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- we know the array is not empty
+  const color = randItem(foregroundPalette, rand)!;
+  const angle = rand() * Math.PI * 2;
+  const lineWidth = randInt(1, 30, rand);
+  const lineSeparation = randInt(lineWidth, lineWidth + 50, rand);
 
-  // Draw donuts
-  for (let i = 0; i < DONUTS; i++) {
-    const radius = randInt(50, 150, rand);
-    const innerRadius = randInt(20, radius - 10, rand);
-    const x = randInt(radius, width - radius, rand);
-    const y = randInt(radius, height - radius, rand);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- we know the array is not empty
-    const color = randItem(foregroundPalette, rand)!;
+  for (let i = 0; i < width + height; i += lineSeparation) {
+    const x1 = -i * Math.cos(angle);
+    const y1 = -i * Math.sin(angle);
+    const x2 = width + i * Math.cos(angle);
+    const y2 = height + i * Math.sin(angle);
 
-    drawDonut(ctx, [x, y], {
-      radius,
-      innerRadius,
+    drawLine(ctx, [x1, y1], [x2, y2], {
+      width: lineWidth,
       color,
       shadowColor: 'black',
-      shadowBlur: radius / 5,
-      shadowOffsetX: 0,
-      shadowOffsetY: 0,
+      shadowBlur: 10,
+      shadowOffsetX: 5,
+      shadowOffsetY: 5,
     });
   }
 
