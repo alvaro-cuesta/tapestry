@@ -69,9 +69,29 @@ jobs:
       - name: Run ESLint
         run: npm run lint:eslint
 
+  lint-knip:
+    name: Lint Knip
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint:knip
+
   build:
     name: Build static files
-    needs: [lint-tsc, lint-prettier, lint-eslint]
+    needs: [lint-tsc, lint-prettier, lint-eslint, lint-knip]
 
     runs-on: ubuntu-latest
     steps:

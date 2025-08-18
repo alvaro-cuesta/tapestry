@@ -17,7 +17,6 @@
 ## Chores
 
 - Remove crap from initial Vite commit
-- Knip
 - Circular dependency checker
 - GH pages action
 - Strongly typed CSS modules
