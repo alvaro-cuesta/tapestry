@@ -13,7 +13,5 @@ registerPostFxWorker('Blue', ({ bitmap }) => {
   ctx.filter = `blur(${blurRadius}px)`;
   ctx.drawImage(bitmap, 0, 0, width, height);
 
-  bitmap.close();
-
   return offscreen.transferToImageBitmap();
 });

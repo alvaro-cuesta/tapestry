@@ -77,6 +77,8 @@ export async function generateWallpaper(
     // the caller having to maange the worker lifecycle and maybe forget to call `terminate()` after drawing.
     return function drawBitmap(ctx: CanvasRenderingContext2D) {
       ctx.drawImage(postFxBitmap, 0, 0);
+      patternBitmap.close();
+      postFxBitmap.close();
       terminate();
     };
   } finally {

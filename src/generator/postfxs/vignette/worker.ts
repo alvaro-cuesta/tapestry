@@ -7,7 +7,6 @@ registerPostFxWorker('Vignette', ({ bitmap }) => {
 
   // Draw the original bitmap onto the offscreen canvas for manipulation
   ctx.drawImage(bitmap, 0, 0);
-  bitmap.close();
 
   // Apply vignette effect
   const gradient = ctx.createRadialGradient(

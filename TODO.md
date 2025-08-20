@@ -7,6 +7,7 @@
 - Allow applying multiple post fxs in series
 - Allow palettes/effects to define their variables and show them in UI
   - E.g. the blur postfx probably wants to expose the blur radius as a slider
+- Caché the pattern so applying postfx is "free"
 
 ## Bugs
 

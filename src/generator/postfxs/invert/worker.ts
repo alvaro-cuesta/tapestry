@@ -7,7 +7,6 @@ registerPostFxWorker('Invert', ({ bitmap }) => {
 
   // Draw the original bitmap onto the offscreen canvas for manipulation
   ctx.drawImage(bitmap, 0, 0);
-  bitmap.close();
 
   // Invert colors of all pixels
   const imageData = ctx.getImageData(0, 0, offscreen.width, offscreen.height);
