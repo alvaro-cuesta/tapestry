@@ -1,21 +1,23 @@
 # Tapestry: the best wallpaper generator
 
 <p align="center">
-  <img src="https://img.shields.io/github/package-json/v/alvaro-cuesta/tapestry" alt="Version">
+  <a href="#tapestry-the-best-wallpaper-generator">
+    <img src="https://img.shields.io/github/package-json/v/alvaro-cuesta/tapestry" alt="Version" />
+  </a>
   <a href="./LICENSE">
-    <img src="https://img.shields.io/github/license/alvaro-cuesta/tapestry" alt="License">
+    <img src="https://img.shields.io/github/license/alvaro-cuesta/tapestry" alt="License" />
   </a>
   <a href="https://github.com/alvaro-cuesta/tapestry/actions/workflows/ci.yml">
-    <img src="https://github.com/alvaro-cuesta/tapestry/actions/workflows/ci.yml/badge.svg" alt="CI Status">
+    <img src="https://github.com/alvaro-cuesta/tapestry/actions/workflows/ci.yml/badge.svg" alt="CI Status" />
   </a>
   <a href="https://github.com/alvaro-cuesta/tapestry/issues">
-    <img src="https://img.shields.io/github/issues/alvaro-cuesta/tapestry" alt="Issues">
+    <img src="https://img.shields.io/github/issues/alvaro-cuesta/tapestry" alt="Issues" />
   </a>
   <a href="#development">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" />
   </a>
   <a href="https://pr.new/alvaro-cuesta/tapestry" alt="Start new PR in StackBlitz Codeflow">
-    <img src="https://developer.stackblitz.com/img/start_pr_small.svg">
+    <img src="https://developer.stackblitz.com/img/start_pr_small.svg" />
   </a>
 </p>
 
