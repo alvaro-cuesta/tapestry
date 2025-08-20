@@ -22,6 +22,7 @@
 - Consider having normalized coordinates so sizes don't matter that much (think more in vectorial terms)
   - Which also allows patterns/postfxs ignoring width/height
   - But maybe some effect wants width/height? Why? Aspect ratio only maybe?
+- Allow downloading at bigger sizes than rendered
 
 ## Performance
 
