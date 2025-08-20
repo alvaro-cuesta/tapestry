@@ -1,4 +1,4 @@
-import type { TaskId } from '../utils';
+import { makeLogPrefix, type TaskId } from '../utils';
 import { CirclesPattern } from './circles';
 import { RevolutionPattern } from './revolution';
 import { StripesPattern } from './stripes';
@@ -17,8 +17,23 @@ export function generatePattern(
   taskId: TaskId,
   worker: Worker,
   options: GeneratePatternOptions,
+  signal: AbortSignal,
 ): Promise<ImageBitmap> {
+  const prefix = makeLogPrefix(taskId, 'generatePattern');
+
   return new Promise((resolve, reject) => {
+    try {
+      signal.throwIfAborted();
+    } catch (err) {
+      if (__DEBUG__) {
+        console.debug(prefix, 'Signal already aborted, terminating worker');
+      }
+      worker.terminate();
+      // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors -- we can't guarantee the error type
+      reject(err);
+      return;
+    }
+
     worker.onmessage = ({ data }: MessageEvent<FromPatternWorkerMessage>) => {
       switch (data.type) {
         case 'success': {
@@ -41,6 +56,18 @@ export function generatePattern(
       // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors -- we do not control the worker, so we can't guarantee the error type
       reject(error.error);
     };
+
+    signal.addEventListener(
+      'abort',
+      () => {
+        if (__DEBUG__) {
+          console.debug(prefix, 'Aborting worker');
+        }
+        worker.terminate();
+        reject(new DOMException('Aborted', 'AbortError'));
+      },
+      { once: true },
+    );
 
     worker.postMessage({
       taskId,

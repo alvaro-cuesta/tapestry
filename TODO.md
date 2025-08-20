@@ -7,7 +7,12 @@
 - Allow applying multiple post fxs in series
 - Allow palettes/effects to define their variables and show them in UI
   - E.g. the blur postfx probably wants to expose the blur radius as a slider
+
+## Performance
+
 - Caché the pattern so applying postfx is "free"
+- Reconsider a different strategy that `.terminate()` and keep the workers alive (and even re-use the offscreen canvas for same sizes?)
+  - But first measure if this makes any actual difference!
 
 ## Bugs
 

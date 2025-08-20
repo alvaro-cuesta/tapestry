@@ -1,4 +1,4 @@
-import type { TaskId } from '../utils';
+import { makeLogPrefix, type TaskId } from '../utils';
 import { BlurPostFx } from './blur';
 import { InvertPostFx } from './invert';
 import { NonePostFx } from './none';
@@ -14,8 +14,23 @@ export function applyPostFx(
   taskId: TaskId,
   worker: Worker,
   options: ApplyPostFxOptions,
+  signal: AbortSignal,
 ): Promise<ImageBitmap> {
+  const prefix = makeLogPrefix(taskId, 'applyPostFx');
+
   return new Promise((resolve, reject) => {
+    try {
+      signal.throwIfAborted();
+    } catch (err) {
+      if (__DEBUG__) {
+        console.debug(prefix, 'Signal already aborted, terminating worker');
+      }
+      worker.terminate();
+      // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors -- we can't guarantee the error type
+      reject(err);
+      return;
+    }
+
     worker.onmessage = ({ data }: MessageEvent<FromPostFxWorkerMessage>) => {
       switch (data.type) {
         case 'success': {
@@ -38,6 +53,18 @@ export function applyPostFx(
       // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors -- we do not control the worker, so we can't guarantee the error type
       reject(error.error);
     };
+
+    signal.addEventListener(
+      'abort',
+      () => {
+        if (__DEBUG__) {
+          console.debug(prefix, 'Aborting worker');
+        }
+        worker.terminate();
+        reject(new DOMException('Aborted', 'AbortError'));
+      },
+      { once: true },
+    );
 
     worker.postMessage(
       {

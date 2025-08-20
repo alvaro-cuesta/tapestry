@@ -16,8 +16,11 @@ export async function generateWallpaper(
   options: GenerateWallpaperOptions,
 ): Promise<(ctx: CanvasRenderingContext2D) => void> {
   const { taskId } = options;
+  const prefix = makeLogPrefix(taskId, 'generateWallpaper');
 
-  const prefix = makeLogPrefix(taskId, 'GenerateWallpaper');
+  if (__PROFILE__) console.time(`[${taskId}] generateWallpaper`);
+
+  options.signal.throwIfAborted();
 
   const patternWorker = new PatternWorkerConstructor();
   const postFxWorker = new PostFxWorkerConstructor();
@@ -31,14 +34,19 @@ export async function generateWallpaper(
     postFxWorker.terminate();
   }
 
-  options.signal.addEventListener('abort', terminate);
-
   try {
-    const patternBitmap = await generatePattern(taskId, patternWorker, {
-      width: options.width,
-      height: options.height,
-      seed: options.seed,
-    });
+    if (__PROFILE__) console.time(`[${taskId}] generatePattern`);
+    const patternBitmap = await generatePattern(
+      taskId,
+      patternWorker,
+      {
+        width: options.width,
+        height: options.height,
+        seed: options.seed,
+      },
+      options.signal,
+    );
+    if (__PROFILE__) console.timeEnd(`[${taskId}] generatePattern`);
 
     if (__DEBUG__) {
       console.debug(prefix, 'patternBitmap', patternBitmap);
@@ -50,10 +58,17 @@ export async function generateWallpaper(
       );
     }
 
-    const postFxBitmap = await applyPostFx(taskId, postFxWorker, {
-      bitmap: patternBitmap,
-      seed: options.seed,
-    });
+    if (__PROFILE__) console.time(`[${taskId}] applyPostFx`);
+    const postFxBitmap = await applyPostFx(
+      taskId,
+      postFxWorker,
+      {
+        bitmap: patternBitmap,
+        seed: options.seed,
+      },
+      options.signal,
+    );
+    if (__PROFILE__) console.timeEnd(`[${taskId}] applyPostFx`);
 
     if (__DEBUG__) {
       console.debug(prefix, 'postFxBitmap', postFxBitmap);
@@ -65,6 +80,8 @@ export async function generateWallpaper(
       );
     }
 
+    if (__PROFILE__) console.timeEnd(`[${taskId}] generateWallpaper`);
+
     // This pattern is weird -- why don't we just return the bitmap and let the caller draw it?
     //
     // Turns out there's a subtle bug in Chrome where calling `worker.terminate()` before the bitmap is drawn might
@@ -74,14 +91,15 @@ export async function generateWallpaper(
     //
     // So we return a function that the caller can call to draw the bitmap, ensuring that the transfer is complete and
     // the bitmap is ready to be drawn, so we can call `terminate()` right after drawing. We do it like this to avoid
-    // the caller having to maange the worker lifecycle and maybe forget to call `terminate()` after drawing.
+    // the caller having to manage the worker lifecycle and maybe forget to call `terminate()` after drawing.
     return function drawBitmap(ctx: CanvasRenderingContext2D) {
       ctx.drawImage(postFxBitmap, 0, 0);
       patternBitmap.close();
       postFxBitmap.close();
       terminate();
     };
-  } finally {
-    options.signal.removeEventListener('abort', terminate);
+  } catch (error) {
+    terminate();
+    throw error;
   }
 }

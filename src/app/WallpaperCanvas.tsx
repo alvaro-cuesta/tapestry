@@ -93,6 +93,10 @@ export const WallpaperCanvas = ({
           });
         })
         .catch((error: unknown) => {
+          if (error instanceof DOMException && error.name === 'AbortError') {
+            return; // Ignore abort errors since they happen on user cancellation
+          }
+
           console.error('Error generating pattern:', error);
           alert(
             `Error generating pattern: ${error instanceof Error ? error.message : 'Unknown error'}`,

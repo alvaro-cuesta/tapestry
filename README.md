@@ -34,6 +34,10 @@ npm run lint:madge
 - You can add new post fxs in [`/src/generator/postfxs/`](./src/generator/postfxs/). See e.g.
   [`/src/generator/postfxs/vignette/`](./src/generator/postfxs/vignette/).
 
+### Additional information
+
+See `DEBUG` and `PROFILE` env vars in [`vite.config.ts](./vite.config.ts).
+
 ## Build
 
 ```sh

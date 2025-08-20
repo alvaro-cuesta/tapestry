@@ -23,6 +23,10 @@ export default defineConfig(({ mode }) => {
     define: {
       __DEBUG__:
         env['DEBUG'] !== undefined && env['DEBUG'] !== 'false' ? true : false,
+      __PROFILE__:
+        env['PROFILE'] !== undefined && env['PROFILE'] !== 'false'
+          ? true
+          : false,
     },
     build: {
       sourcemap: true,
