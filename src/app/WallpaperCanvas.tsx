@@ -112,6 +112,12 @@ export const WallpaperCanvas = (props: WallpaperCanvasProps) => {
     props.seed,
   ]);
 
+  useEffect(() => {
+    return () => {
+      abortRef.current?.abort();
+    };
+  }, []);
+
   return (
     <div
       className={styles['canvas-container']}
