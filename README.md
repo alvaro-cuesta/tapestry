@@ -1,17 +1,30 @@
 # Tapestry: the best wallpaper generator
 
-[![License](https://img.shields.io/github/license/alvaro-cuesta/tapestry)](./LICENSE)
-[![CI Status](https://github.com/alvaro-cuesta/tapestry/actions/workflows/ci.yml/badge.svg)](https://github.com/alvaro-cuesta/tapestry/actions/workflows/ci.yml)
-[![Issues](https://img.shields.io/github/issues/alvaro-cuesta/tapestry)](https://github.com/alvaro-cuesta/tapestry/issues)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#development)
-[![Start new PR in StackBlitz Codeflow](https://developer.stackblitz.com/img/start_pr_small.svg)](https://pr.new/alvaro-cuesta/tapestry)
+<p align="center">
+  <img src="https://img.shields.io/github/package-json/v/alvaro-cuesta/tapestry" alt="Version">
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/github/license/alvaro-cuesta/tapestry" alt="License">
+  </a>
+  <a href="https://github.com/alvaro-cuesta/tapestry/actions/workflows/ci.yml">
+    <img src="https://github.com/alvaro-cuesta/tapestry/actions/workflows/ci.yml/badge.svg" alt="CI Status">
+  </a>
+  <a href="https://github.com/alvaro-cuesta/tapestry/issues">
+    <img src="https://img.shields.io/github/issues/alvaro-cuesta/tapestry" alt="Issues">
+  </a>
+  <a href="#development">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
+  </a>
+  <a href="https://pr.new/alvaro-cuesta/tapestry" alt="Start new PR in StackBlitz Codeflow">
+    <img src="https://developer.stackblitz.com/img/start_pr_small.svg">
+  </a>
+</p>
 
 Generate wallpapers/backgrounds for your mobile phone or desktop at a click's distance. Supports multiple beautiful
 patterns, custom palettes, post-processing effects...
 
-<div align="center" style="font-size:24px; text-decoration:none; font-weight:bold;">
-  Try it on <a href="https://tapestry.cuesta.dev">tapestry.cuesta.dev</a>!
-</div>
+<p align="center">
+  <big><b>Try it now on <a href="https://tapestry.cuesta.dev">tapestry.cuesta.dev</a>!</b></big>
+</p>
 
 > [!IMPORTANT]
 > Currently _best_ is **not guaranteed**. Actually not even _wallpaper generator_ is guaranteed. This is just a very

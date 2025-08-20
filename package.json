@@ -2,7 +2,7 @@
   "name": "tapestry",
   "private": true,
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "The best wallapaper generator. Generate wallpapers/backgrounds for your mobile phone or desktop at a click's distance.",
   "keywords": [
     "wallpaper",
