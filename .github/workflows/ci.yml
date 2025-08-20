@@ -1,4 +1,4 @@
-name: '"main" branch workflow'
+name: CI
 
 on:
   push:
@@ -153,6 +153,7 @@ jobs:
           path: dist/
 
   deploy:
+    if: github.repository == 'alvaro-cuesta/tapestry'
     name: Deploy to GitHub Pages
     needs: build
 

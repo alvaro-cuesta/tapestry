@@ -1,5 +1,11 @@
 # Tapestry: the best wallpaper generator
 
+[![License](https://img.shields.io/github/license/alvaro-cuesta/tapestry)](./LICENSE)
+[![CI Status](https://github.com/alvaro-cuesta/tapestry/actions/workflows/ci.yml/badge.svg)](https://github.com/alvaro-cuesta/tapestry/actions/workflows/ci.yml)
+[![Issues](https://img.shields.io/github/issues/alvaro-cuesta/tapestry)](https://github.com/alvaro-cuesta/tapestry/issues)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#development)
+[![Start new PR in StackBlitz Codeflow](https://developer.stackblitz.com/img/start_pr_small.svg)](https://pr.new/alvaro-cuesta/tapestry)
+
 Generate wallpapers/backgrounds for your mobile phone or desktop at a click's distance. Supports multiple beautiful
 patterns, custom palettes, post-processing effects...
 
