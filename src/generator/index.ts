@@ -15,12 +15,12 @@ export async function generateWallpaper(
   PostFxWorkerConstructor: new () => Worker,
   options: GenerateWallpaperOptions,
 ): Promise<(ctx: CanvasRenderingContext2D) => void> {
+  options.signal.throwIfAborted();
+
   const { taskId } = options;
   const prefix = makeLogPrefix(taskId, 'generateWallpaper');
 
   if (__PROFILE__) console.time(`[${taskId}] generateWallpaper`);
-
-  options.signal.throwIfAborted();
 
   const patternWorker = new PatternWorkerConstructor();
   const postFxWorker = new PostFxWorkerConstructor();
@@ -92,6 +92,9 @@ export async function generateWallpaper(
     // So we return a function that the caller can call to draw the bitmap, ensuring that the transfer is complete and
     // the bitmap is ready to be drawn, so we can call `terminate()` right after drawing. We do it like this to avoid
     // the caller having to manage the worker lifecycle and maybe forget to call `terminate()` after drawing.
+    //
+    // If this bug is ever fixed (I doubt it will be, too obscure) just move the termination logic to the worker
+    // promise wrapper and return the bitmap directly.
     return function drawBitmap(ctx: CanvasRenderingContext2D) {
       ctx.drawImage(postFxBitmap, 0, 0);
       patternBitmap.close();
