@@ -32,12 +32,14 @@
 ## Bugs
 
 - Sometimes scrollbars appear if resizing pixel by pixel... but I don't want to fix this hacking with `scroll: hidden`
+- When address bar is hidden in firefox mobile the icons do not go to the bottom
 
 ## QoL/Cosmetics
 
 - [PWA](https://vite-pwa-org.netlify.app/)
 - Favicons and other crap like tiles, theme color, etc.
 - Spinner for long wallpaper generations
+- Can I somehow have a better interaction with the address bar in mobile? It's terrible when it hides
 
 ## Chores
 

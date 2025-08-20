@@ -178,7 +178,7 @@ export function App() {
               circularLinkStyles['circular-link'],
               styles['ui-button'],
             )}
-            href="https://github.com/alvaro-cuesta/tapestry/"
+            href="https://github.com/alvaro-cuesta/tapestry"
             target="_blank"
             rel="noopener noreferrer"
           >
