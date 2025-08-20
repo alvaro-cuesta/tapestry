@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import styles from './CircularButton.module.css';
 
-export type CircularButtonProps = {
+type CircularButtonProps = {
   type?: 'button' | 'submit' | 'reset' | undefined;
   className?: string | undefined;
   onClick: () => void;
