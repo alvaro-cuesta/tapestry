@@ -1,6 +1,7 @@
 # Tapestry TODO
 
-Also remember to do a global search for `@todo` since there are some in-code comments.
+> [!NOTE]
+> Also remember to do a global search for `@todo` since there are some in code comments.
 
 ## Features
 
