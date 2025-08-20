@@ -75,3 +75,15 @@
   /* @hack This is a hack to make the icon look centered in a circle */
   transform: translateY(-0.05rem);
 }
+
+.title-link {
+  display: block;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+}
+
+.title-link:hover {
+  color: rgba(255, 255, 255, 1);
+}

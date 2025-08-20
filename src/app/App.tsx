@@ -6,6 +6,7 @@ import {
 } from '@remixicon/react';
 import cx from 'classnames';
 import { useCallback, useRef, useState } from 'react';
+import * as packageJson from '../../package.json';
 import styles from '../app/App.module.css';
 import { PATTERNS } from '../generator/patterns';
 import { POST_FXS } from '../generator/postfxs';
@@ -173,6 +174,18 @@ export function App() {
         </div>
 
         <div className={styles['ui-top-right']}>
+          <div>
+            <a
+              className={cx(styles['title-link'])}
+              href="https://github.com/alvaro-cuesta/tapestry"
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`Tapestry v${packageJson.version} (${__GIT_COMMIT_SHORT_SHA__})`}
+            >
+              Tapestry
+            </a>
+          </div>
+
           <a
             className={cx(
               circularLinkStyles['circular-link'],

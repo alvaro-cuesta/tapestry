@@ -1,12 +1,17 @@
 /// <reference types="node" />
 
 import react from '@vitejs/plugin-react';
+import { exec } from 'node:child_process';
 import process from 'node:process';
-import { defineConfig, loadEnv } from 'vite';
+import util from 'node:util';
+import { defineConfig, loadEnv, type UserConfig } from 'vite';
 import { patchCssModules } from 'vite-css-modules';
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(async ({ mode }): Promise<UserConfig> => {
   const env = loadEnv(mode, process.cwd(), '');
+  const gitCommit = (
+    await util.promisify(exec)('git rev-parse --short HEAD')
+  ).stdout.trim();
 
   // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- we want to default to '/' if BASE is empty string too
   const base = env['BASE'] || '/';
@@ -27,6 +32,7 @@ export default defineConfig(({ mode }) => {
         env['PROFILE'] !== undefined && env['PROFILE'] !== 'false'
           ? true
           : false,
+      __GIT_COMMIT_SHORT_SHA__: JSON.stringify(gitCommit),
     },
     build: {
       sourcemap: true,
