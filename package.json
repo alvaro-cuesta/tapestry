@@ -1,9 +1,27 @@
 {
   "name": "tapestry",
   "private": true,
-  "license": "GPL-3.0-only",
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
+  "description": "The best wallapaper generator. Generate wallpapers/backgrounds for your mobile phone or desktop at a click's distance.",
+  "keywords": [
+    "wallpaper",
+    "wallpaper-generator",
+    "phone-wallpaper",
+    "desktop-wallpaper",
+    "background",
+    "background-generator",
+    "phone-background",
+    "desktop-background"
+  ],
+  "homepage": "https://github.com/alvaro-cuesta/tapestry#readme",
+  "bugs": "https://github.com/alvaro-cuesta/tapestry/issues",
+  "author": {
+    "name": "Álvaro Cuesta",
+    "url": "https://alvaro.cuesta.dev"
+  },
+  "license": "GPL-3.0-only",
+  "repository": "github:alvaro-cuesta/tapestry",
   "scripts": {
     "dev": "vite",
     "build": "tsc --build && vite build",

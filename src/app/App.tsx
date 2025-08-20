@@ -177,7 +177,7 @@ export function App() {
           <div>
             <a
               className={cx(styles['title-link'])}
-              href="https://github.com/alvaro-cuesta/tapestry"
+              href={packageJson.homepage}
               target="_blank"
               rel="noopener noreferrer"
               title={`Tapestry v${packageJson.version} (${__GIT_COMMIT_SHORT_SHA__})`}
@@ -191,7 +191,7 @@ export function App() {
               circularLinkStyles['circular-link'],
               styles['ui-button'],
             )}
-            href="https://github.com/alvaro-cuesta/tapestry"
+            href={packageJson.homepage}
             target="_blank"
             rel="noopener noreferrer"
           >

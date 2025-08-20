@@ -3,7 +3,9 @@
 Generate wallpapers/backgrounds for your mobile phone or desktop at a click's distance. Supports multiple beautiful
 patterns, custom palettes, post-processing effects...
 
-Try it on https://tapestry.cuesta.dev/
+<div align="center" style="font-size:24px; text-decoration:none; font-weight:bold;">
+  Try it on <a href="https://tapestry.cuesta.dev">tapestry.cuesta.dev</a>!
+</div>
 
 > [!IMPORTANT]
 > Currently _best_ is **not guaranteed**. Actually not even _wallpaper generator_ is guaranteed. This is just a very
@@ -11,11 +13,27 @@ Try it on https://tapestry.cuesta.dev/
 
 ## Development
 
+It's easy to contribute even if you are not familiar with [Node.js](https://nodejs.org) development. E.g., if you are
+well-versed with procedural image generation your contributions are appreciated to grow our effect collection!
+
+Install [Node.js](https://nodejs.org), clone this repository and run this in the root of the project to install the
+required dependencies:
+
+```sh
+npm install
+```
+
+### Local development
+
+Just run this to start a local development server and follow the instructions:
+
 ```sh
 npm run dev
 ```
 
-Run lints using:
+### Lints
+
+You should periodically run linters to ensure the code passes some basic checks:
 
 ```sh
 npm run lint:tsc
@@ -25,6 +43,8 @@ npm run lint:prettier
 npm run lint:knip
 npm run lint:madge
 ```
+
+These are automatically run as checks on GitHub Actions, but it's better if you keep lints up to date as you code!
 
 ### Things to do
 

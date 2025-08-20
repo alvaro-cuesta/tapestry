@@ -38,6 +38,7 @@
 
 - CSS is currently so ugly
 - [PWA](https://vite-pwa-org.netlify.app/)
+- Meta tags and social graph
 - Favicons and other crap like tiles, theme color, etc.
 - Spinner for long wallpaper generations
 - Can I somehow have a better interaction with the address bar in mobile? It's terrible when it hides
