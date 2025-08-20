@@ -26,6 +26,8 @@ Also remember to do a global search for `@todo` since there are some in-code com
 
 ## Bugs
 
+- Sometimes scrollbars appear if resizing pixel by pixel... but I don't want to fix this hacking with `scroll: hidden`
+
 ## QoL/Cosmetics
 
 - [PWA](https://vite-pwa-org.netlify.app/)
@@ -38,3 +40,5 @@ Also remember to do a global search for `@todo` since there are some in-code com
 - Strongly typed CSS modules
 - Ensure that vendor CSS is also split
 - CSS source maps?
+
+## Research

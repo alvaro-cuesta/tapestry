@@ -11,15 +11,10 @@ type WallpaperCanvasProps = {
   width: number;
   height: number;
   seed: number;
+  canvasRef?: React.Ref<HTMLCanvasElement> | undefined;
 };
 
-export const WallpaperCanvas = ({
-  pattern,
-  postFx,
-  width,
-  height,
-  seed,
-}: WallpaperCanvasProps) => {
+export const WallpaperCanvas = (props: WallpaperCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -107,18 +102,35 @@ export const WallpaperCanvas = ({
   );
 
   useEffect(() => {
-    draw(pattern, postFx, width, height, seed);
-  }, [pattern, postFx, width, height, seed, draw]);
+    draw(props.pattern, props.postFx, props.width, props.height, props.seed);
+  }, [
+    draw,
+    props.pattern,
+    props.postFx,
+    props.width,
+    props.height,
+    props.seed,
+  ]);
 
   return (
     <div
       className={styles['canvas-container']}
-      style={{ width, height }}
+      style={{ width: props.width, height: props.height }}
     >
       <canvas
-        ref={canvasRef}
+        ref={(ref) => {
+          canvasRef.current = ref;
+
+          if (props.canvasRef) {
+            if (typeof props.canvasRef === 'function') {
+              props.canvasRef(ref);
+            } else {
+              props.canvasRef.current = ref;
+            }
+          }
+        }}
         className={styles['canvas']}
-        style={{ width, height }}
+        style={{ width: props.width, height: props.height }}
       />
     </div>
   );
