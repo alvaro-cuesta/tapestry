@@ -1,4 +1,9 @@
-import { RiDiceLine, RiDownload2Fill, RiGithubFill } from '@remixicon/react';
+import {
+  RiArrowRightUpFill,
+  RiDiceLine,
+  RiDownload2Fill,
+  RiGithubFill,
+} from '@remixicon/react';
 import cx from 'classnames';
 import { useCallback, useRef, useState } from 'react';
 import styles from '../app/App.module.css';
@@ -39,18 +44,56 @@ export function App() {
     setSeed(randInt(0, 2 ** 32));
   }, []);
 
-  const handleDownloadClick = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) {
-      console.error('Canvas reference is not set');
-      return;
-    }
+  const getCanvasBlob = useCallback(() => {
+    return new Promise<Blob>((resolve, reject) => {
+      const canvas = canvasRef.current;
+      if (!canvas) {
+        console.error('Canvas reference is not set');
+        reject(new Error('Canvas reference is not set'));
+        return;
+      }
 
-    const link = document.createElement('a');
-    link.download = `wallpaper-${Date.now()}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          alert('Failed to generate image. Please try again.');
+          reject(new Error('Failed to generate image'));
+          return;
+        }
+
+        resolve(blob);
+      }, 'image/png');
+    });
   }, []);
+
+  const handleOpenInNewTabClick = useCallback(() => {
+    void getCanvasBlob().then((blob) => {
+      const blobUrl = URL.createObjectURL(blob);
+      window.open(blobUrl, '_blank');
+      // @hack If we revoke the URL the opened tab cannot be refreshed or opened in a new tab
+      //
+      // This is a trade-off between memory usage and usability -- I don't expect users to open many tabs so I'll just
+      // leave the URL alive and let the browser handle it when this page closes.
+      //
+      // DataURLs do not have this problem, but they have other tradeoffs (`window.open` does not work with them in
+      // Chrome unless you create an image manually inside the new tab... also they can be large and might be an
+      // issue in some browsers due to URL length limits...)
+      //
+      // URL.revokeObjectURL(blobUrl);
+    });
+  }, [getCanvasBlob]);
+
+  const handleDownloadClick = useCallback(() => {
+    void getCanvasBlob().then((blob) => {
+      const blobUrl = URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.download = `wallpaper-${Date.now()}.png`;
+      link.href = blobUrl;
+      link.click();
+
+      URL.revokeObjectURL(blobUrl);
+    });
+  }, [getCanvasBlob]);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- we know the index is always valid since it's a <select> on the list itself
   const pattern = PATTERNS[patternIdx]!;
@@ -104,6 +147,18 @@ export function App() {
         </div>
 
         <div className={styles['ui-bottom-right']}>
+          <CircularButton
+            className={styles['ui-button']}
+            onClick={handleOpenInNewTabClick}
+          >
+            <RiArrowRightUpFill
+              className={cx(
+                styles['ui-button-icon'],
+                styles['download-button-icon'],
+              )}
+            />
+          </CircularButton>
+
           <CircularButton
             className={styles['ui-button']}
             onClick={handleDownloadClick}

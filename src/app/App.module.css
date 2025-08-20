@@ -27,6 +27,7 @@
   pointer-events: none;
   display: flex;
   flex-direction: column;
+  gap: 0.25em;
 }
 
 .ui-top-left {
