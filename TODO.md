@@ -5,6 +5,10 @@
 
 ## Features
 
+- Use device screen size, not HTML size
+  - Remember to scale accordingly, attending to aspect ratio
+- Allow size selection
+- Allow "parallax" mobile phone in size
 - Palettes
 - Add thumbnails to patterns and postfxs
 - Allow applying multiple post fxs in series

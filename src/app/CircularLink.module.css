@@ -1,0 +1,24 @@
+.circular-link {
+  display: inline-block;
+  border-radius: 50%;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-link {
+  border: 1px solid transparent;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+.circular-link:hover {
+  border-color: #646cff;
+}
+.circular-link:focus,
+.circular-link:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}

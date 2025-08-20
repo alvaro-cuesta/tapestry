@@ -1,3 +1,5 @@
+import { RiDiceLine, RiDownload2Fill, RiGithubFill } from '@remixicon/react';
+import cx from 'classnames';
 import { useCallback, useRef, useState } from 'react';
 import styles from '../app/App.module.css';
 import { PATTERNS } from '../generator/patterns';
@@ -5,6 +7,7 @@ import { POST_FXS } from '../generator/postfxs';
 import useWindowSize from '../hooks/useWindowSize';
 import { randInt } from '../utils/rand';
 import { CircularButton } from './CircularButton';
+import circularLinkStyles from './CircularLink.module.css';
 import { WallpaperCanvas } from './WallpaperCanvas';
 
 export function App() {
@@ -90,22 +93,48 @@ export function App() {
             ))}
           </select>
         </div>
-        <div className={styles['ui-top-right']}></div>
+
         <div className={styles['ui-bottom-left']}>
           <CircularButton
             className={styles['ui-button']}
             onClick={handleReseedClick}
           >
-            <span className={styles['reseed-button-icon']}>🎲</span>
+            <RiDiceLine className={styles['ui-button-icon']} />
           </CircularButton>
         </div>
+
         <div className={styles['ui-bottom-right']}>
           <CircularButton
             className={styles['ui-button']}
             onClick={handleDownloadClick}
           >
-            <span className={styles['download-button-icon']}>📥</span>
+            <RiDownload2Fill
+              className={cx(
+                styles['ui-button-icon'],
+                styles['download-button-icon'],
+              )}
+            />
           </CircularButton>
+        </div>
+
+        <div className={styles['ui-top-right']}>
+          <a
+            className={cx(
+              circularLinkStyles['circular-link'],
+              styles['ui-button'],
+            )}
+            href="https://github.com/alvaro-cuesta/tapestry/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <RiGithubFill
+              className={cx(
+                circularLinkStyles['circular-link-icon'],
+                styles['ui-button-icon'],
+                styles['github-button-icon'],
+              )}
+            />
+          </a>
         </div>
       </div>
       <WallpaperCanvas

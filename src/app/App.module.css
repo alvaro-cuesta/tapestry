@@ -59,12 +59,18 @@
   height: 3rem;
 }
 
-.reseed-button-icon {
-  /* @hack This is a hack to make the icon look centered (at least on Windows?) */
-  transform: translateY(-0.05rem);
+.ui-button-icon {
+  color: white;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.github-button-icon {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .download-button-icon {
-  /* @hack This is a hack to make the icon look centered (at least on Windows?) */
-  transform: translateY(-0.3rem);
+  /* @hack This is a hack to make the icon look centered in a circle */
+  transform: translateY(-0.05rem);
 }
