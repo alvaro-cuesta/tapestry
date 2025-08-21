@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1200"
+   height="630"
+   viewBox="0 0 1200 630"
+   role="img"
+   aria-label="Tapestry favicon"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="tapestry-og-center.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.1279297"
+     inkscape:cx="565.1948"
+     inkscape:cy="287.69524"
+     inkscape:window-width="2560"
+     inkscape:window-height="1373"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6" />
+  <style
+     id="style1">
+    @media (prefers-color-scheme: dark) {
+      .fg { fill: #0b1b2b }
+      .bg { fill: #ffffff }
+    }
+  </style>
+  <rect
+     style="font-variation-settings:'wght' 400;opacity:0.99;fill:#ffffff;stroke-width:216.508;stroke-linejoin:round"
+     id="rect7"
+     width="1200"
+     height="630"
+     x="0"
+     y="0" />
+  <rect
+     x="360"
+     y="75"
+     width="480"
+     height="480"
+     rx="105"
+     fill="#0b1b2b"
+     class="bg"
+     id="rect1"
+     style="stroke-width:1.87499" />
+  <rect
+     x="450"
+     y="165"
+     width="135"
+     height="135"
+     rx="33.75"
+     fill="#f4513e"
+     class="sd"
+     id="rect2"
+     style="stroke-width:1.87499" />
+  <rect
+     x="615"
+     y="165"
+     width="135"
+     height="135"
+     rx="33.75"
+     fill="#f7a528"
+     class="sd"
+     id="rect3"
+     style="stroke-width:1.87499" />
+  <rect
+     x="615"
+     y="330"
+     width="135"
+     height="135"
+     rx="33.75"
+     fill="#2fb7d8"
+     class="sd"
+     id="rect4"
+     style="stroke-width:1.87499" />
+  <rect
+     x="450"
+     y="330"
+     width="135"
+     height="135"
+     rx="33.75"
+     fill="#ffd44d"
+     class="sd"
+     id="rect5"
+     style="stroke-width:1.87499" />
+  <rect
+     x="585"
+     y="300"
+     width="30"
+     height="30"
+     rx="7.5"
+     fill="#ffffff"
+     class="fg"
+     id="rect6"
+     style="stroke-width:1.87499" />
+</svg>
