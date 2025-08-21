@@ -102,6 +102,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       'import.meta.env.PACKAGE_DESCRIPTION': JSON.stringify(
         packageJson.description,
       ),
+      'import.meta.env.PACKAGE_HOMEPAGE': JSON.stringify(packageJson.homepage),
       'import.meta.env.PACKAGE_CONFIG_NAME': JSON.stringify(
         packageJson.config.name,
       ),
@@ -113,6 +114,12 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       ),
       'import.meta.env.PACKAGE_CONFIG_THEME_COLOR': JSON.stringify(
         packageJson.config.themeColor,
+      ),
+      'import.meta.env.PACKAGE_CONFIG_URL': JSON.stringify(
+        packageJson.config.url,
+      ),
+      'import.meta.env.PACKAGE_CONFIG_PUBLIC_URL_BASE': JSON.stringify(
+        packageJson.config.publicUrlBase,
       ),
     },
     build: {

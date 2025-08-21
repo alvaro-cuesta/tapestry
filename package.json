@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "version": "0.1.0",
-  "description": "The best wallapaper generator. Generate wallpapers/backgrounds for your mobile phone or desktop at a click's distance.",
+  "description": "The best wallpaper generator. Generate wallpapers/backgrounds for your mobile phone or desktop at a click's distance.",
   "keywords": [
     "wallpaper",
     "wallpaper-generator",
@@ -15,10 +15,12 @@
     "desktop-background"
   ],
   "config": {
-    "name": "Tapestry: the best wallapaper generator",
+    "name": "Tapestry: the best wallpaper generator",
     "shortName": "Tapestry",
     "description": "Generate wallpapers/backgrounds for your mobile phone or desktop at a click's distance.",
-    "themeColor": "#0b1b2b"
+    "themeColor": "#0b1b2b",
+    "url": "https://tapestry.cuesta.dev",
+    "publicUrlBase": "https://tapestry.cuesta.dev"
   },
   "homepage": "https://github.com/alvaro-cuesta/tapestry#readme",
   "bugs": "https://github.com/alvaro-cuesta/tapestry/issues",

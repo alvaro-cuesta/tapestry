@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1024mm"
+   height="1024mm"
+   viewBox="0 0 1024 1024"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="tapestry-twitter.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.18189176"
+     inkscape:cx="1445.9149"
+     inkscape:cy="2581.2054"
+     inkscape:window-width="2560"
+     inkscape:window-height="1373"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" /><defs
+     id="defs1" /><g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"><rect
+       style="font-variation-settings:'wght' 400;opacity:0.99;fill:#ffffff;stroke-width:30.6713;stroke-linejoin:round"
+       id="rect7"
+       width="1024"
+       height="1024"
+       x="0"
+       y="0" /><g
+       id="g1"
+       transform="matrix(3.25,0,0,3.25,96,96)"><rect
+         x="0"
+         y="0"
+         width="256"
+         height="256"
+         rx="56"
+         fill="#0b1b2b"
+         class="bg"
+         id="rect1" /><rect
+         x="48"
+         y="48"
+         width="72"
+         height="72"
+         rx="18"
+         fill="#f4513e"
+         class="sd"
+         id="rect2" /><rect
+         x="136"
+         y="48"
+         width="72"
+         height="72"
+         rx="18"
+         fill="#f7a528"
+         class="sd"
+         id="rect3" /><rect
+         x="136"
+         y="136"
+         width="72"
+         height="72"
+         rx="18"
+         fill="#2fb7d8"
+         class="sd"
+         id="rect4" /><rect
+         x="48"
+         y="136"
+         width="72"
+         height="72"
+         rx="18"
+         fill="#ffd44d"
+         class="sd"
+         id="rect5" /><rect
+         x="120"
+         y="120"
+         width="16"
+         height="16"
+         rx="4"
+         fill="#ffffff"
+         class="fg"
+         id="rect6" /></g></g><style
+     id="style1">
+    @media (prefers-color-scheme: dark) {
+      .fg { fill: #0b1b2b }
+      .bg { fill: #ffffff }
+    }
+  </style></svg>

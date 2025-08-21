@@ -38,7 +38,6 @@
 ## QoL/Cosmetics
 
 - CSS is currently so ugly
-- Meta tags and social graph
 - Spinner for long wallpaper generations
 - Can I somehow have a better interaction with the address bar in mobile? It's terrible when it hides
 
