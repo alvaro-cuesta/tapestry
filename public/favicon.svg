@@ -1,0 +1,14 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tapestry favicon">
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .fg { fill: #0b1b2b }
+      .bg { fill: #ffffff }
+    }
+  </style>
+  <rect x="0" y="0" width="256" height="256" rx="56" fill="#0b1b2b" class="bg"/>
+  <rect x="48"  y="48"  width="72" height="72" rx="18" fill="#f4513e" class="sd"/>
+  <rect x="136" y="48"  width="72" height="72" rx="18" fill="#f7a528" class="sd"/>
+  <rect x="136" y="136" width="72" height="72" rx="18" fill="#2fb7d8" class="sd"/>
+  <rect x="48"  y="136" width="72" height="72" rx="18" fill="#ffd44d" class="sd"/>
+  <rect x="120" y="120" width="16" height="16" rx="4" fill="#ffffff" class="fg"/>
+</svg>

@@ -180,9 +180,9 @@ export function App() {
               href={packageJson.homepage}
               target="_blank"
               rel="noopener noreferrer"
-              title={`Tapestry v${packageJson.version} (${__GIT_COMMIT_SHORT_SHA__})`}
+              title={`${packageJson.config.shortName} v${packageJson.version} (${import.meta.env.GIT_COMMIT_SHORT_SHA})`}
             >
-              Tapestry
+              {packageJson.config.shortName}
             </a>
           </div>
 
