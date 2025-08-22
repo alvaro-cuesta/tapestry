@@ -15,10 +15,17 @@ on:
       - 'TODO.md'
 
 jobs:
-  lint-tsc:
-    name: Lint TypeScript
-
+  lint:
+    name: Lint ${{ matrix.linter.name }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        linter:
+          - { name: 'TypeScript', script: 'lint:tsc' }
+          - { name: 'Prettier', script: 'lint:prettier' }
+          - { name: 'ESLint', script: 'lint:eslint' }
+          - { name: 'Knip', script: 'lint:knip' }
+          - { name: 'Madge', script: 'lint:madge' }
     steps:
       - &checkout
         name: Check out Git repository
@@ -36,60 +43,12 @@ jobs:
         shell: bash
         run: npm ci
 
-      - name: Run TypeScript Compiler
-        run: npm run lint:tsc
-
-  lint-prettier:
-    name: Lint Prettier
-
-    runs-on: ubuntu-latest
-    steps:
-      - *checkout
-      - *setup
-      - *install_deps
-
-      - name: Run Prettier
-        run: npm run lint:prettier
-
-  lint-eslint:
-    name: Lint ESLint
-
-    runs-on: ubuntu-latest
-    steps:
-      - *checkout
-      - *setup
-      - *install_deps
-
-      - name: Run ESLint
-        run: npm run lint:eslint
-
-  lint-knip:
-    name: Lint Knip
-
-    runs-on: ubuntu-latest
-    steps:
-      - *checkout
-      - *setup
-      - *install_deps
-
-      - name: Run Knip
-        run: npm run lint:knip
-
-  lint-madge:
-    name: Lint Madge
-
-    runs-on: ubuntu-latest
-    steps:
-      - *checkout
-      - *setup
-      - *install_deps
-
-      - name: Run Madge
-        run: npm run lint:madge
+      - name: Run ${{ matrix.linter.name }}
+        run: npm run ${{ matrix.linter.script }}
 
   build:
     name: Build static files
-    needs: [lint-tsc, lint-prettier, lint-eslint, lint-knip, lint-madge]
+    needs: lint
 
     runs-on: ubuntu-latest
     steps:
@@ -124,8 +83,6 @@ jobs:
           npm run build > >(tee build-output.log) 2> >(tee -a build-output.log >&2)
 
             {
-            echo "### Build output"
-            echo ""
             echo "- **Node version:** ${{ steps.versions.outputs.node_version }}"
             echo "- **NPM version:** ${{ steps.versions.outputs.npm_version }}"
             echo ""
