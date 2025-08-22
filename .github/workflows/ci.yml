@@ -15,16 +15,29 @@ on:
       - 'TODO.md'
 
 jobs:
+  _anchors:
+    runs-on: ubuntu-latest
+    steps: &setup
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        shell: bash
+    if: false # dummy job, doesn’t actually run
+
   lint-tsc:
     name: Lint TypeScript
 
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-env
-
+      <<: *setup
       - name: Run TypeScript Compiler
         run: npm run lint:tsc
 
@@ -36,7 +49,14 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - uses: ./.github/actions/setup-env
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run Prettier
         run: npm run lint:prettier
@@ -49,7 +69,14 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - uses: ./.github/actions/setup-env
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run ESLint
         run: npm run lint:eslint
@@ -62,7 +89,14 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - uses: ./.github/actions/setup-env
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run Knip
         run: npm run lint:knip
@@ -75,7 +109,14 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - uses: ./.github/actions/setup-env
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run Madge
         run: npm run lint:madge
@@ -89,7 +130,14 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - uses: ./.github/actions/setup-env
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Infer base path
         id: infer-base-path
