@@ -25,9 +25,16 @@ jobs:
         uses: actions/checkout@v4
 
       - &setup
-        name: Setup environment
-        id: setup
-        uses: ./.github/actions/setup-env
+        name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - &install_deps
+        name: Install dependencies
+        shell: bash
+        run: npm ci
 
       - name: Run TypeScript Compiler
         run: npm run lint:tsc
@@ -39,6 +46,7 @@ jobs:
     steps:
       - *checkout
       - *setup
+      - *install_deps
 
       - name: Run Prettier
         run: npm run lint:prettier
@@ -50,6 +58,7 @@ jobs:
     steps:
       - *checkout
       - *setup
+      - *install_deps
 
       - name: Run ESLint
         run: npm run lint:eslint
@@ -61,6 +70,7 @@ jobs:
     steps:
       - *checkout
       - *setup
+      - *install_deps
 
       - name: Run Knip
         run: npm run lint:knip
@@ -72,6 +82,7 @@ jobs:
     steps:
       - *checkout
       - *setup
+      - *install_deps
 
       - name: Run Madge
         run: npm run lint:madge
@@ -84,6 +95,7 @@ jobs:
     steps:
       - *checkout
       - *setup
+      - *install_deps
 
       - name: Infer base path
         id: infer-base-path
@@ -99,18 +111,23 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get Node.js and NPM versions
+        id: versions
+        run: |
+          echo "node_version=$(node --version)" >> $GITHUB_OUTPUT
+          echo "npm_version=$(npm --version)" >> $GITHUB_OUTPUT
+
       - name: Build static files
         env:
           BASE: ${{ steps.infer-base-path.outputs.result }}
-        shell: bash
         run: |
           npm run build > >(tee build-output.log) 2> >(tee -a build-output.log >&2)
 
             {
             echo "### Build output"
             echo ""
-            echo "- **Node version:** ${{ steps.setup.outputs.node_version }}"
-            echo "- **NPM version:** ${{ steps.setup.outputs.npm_version }}"
+            echo "- **Node version:** ${{ steps.versions.outputs.node_version }}"
+            echo "- **NPM version:** ${{ steps.versions.outputs.npm_version }}"
             echo ""
             echo '```'
             # Strip ANSI colors and escape any triple backticks in the output
@@ -118,6 +135,7 @@ jobs:
             echo '```'
             echo ""
             } >> $GITHUB_STEP_SUMMARY
+
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
