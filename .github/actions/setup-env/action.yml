@@ -2,9 +2,9 @@ name: 'Setup Environment'
 
 outputs:
   node_version:
-    description: "Node.js version installed"
+    description: 'Node.js version installed'
   npm_version:
-    description: "Node.js version installed"
+    description: 'Node.js version installed'
 
 runs:
   using: 'composite'
