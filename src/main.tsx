@@ -21,16 +21,10 @@ reactRoot.render(
   </StrictMode>,
 );
 
-foobar
-
-function foo(bar) {
-  
-}
-
 // `virtual:pwa-register` (or automatic registration via `injectRegister`) cause all tabs to refresh. I don't want that
 // because it might cause users to lose their WIP, so I just register the SW but don't refresh or anything on updates.
 // See vite.config.js on why.
-if ("serviceWorker" in navigator) {
+if ('serviceWorker' in navigator) {
   /* const startedAt = Date.now(); */
 
   void navigator.serviceWorker.register('/sw.js', { scope: '/' });
