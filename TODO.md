@@ -43,6 +43,8 @@
 - Can I somehow have a better interaction with the address bar in mobile? It's terrible when it hides
 - Disable pull to refresh (at least on PWA)
 - Disable pinch-to-zoom (at least on PWA) or make it work on the canvas element instead
+- Same all state in query params
+  - At this point consider going back to normal autoUpdate SW or prompt since refresh won't lose user WIP
 
 ## Chores
 
