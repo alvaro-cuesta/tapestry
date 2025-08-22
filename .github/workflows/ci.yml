@@ -23,14 +23,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+      - uses: ./.github/actions/setup-env
 
       - name: Run TypeScript Compiler
         run: npm run lint:tsc
@@ -40,27 +33,13 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Run Prettier
-        run: |
-          output=$(npm run lint:prettier 2>&1 | tee /dev/stderr)
-          status=$?
+      - name: Check out Git repository
+        uses: actions/checkout@v4
 
-          if [ $status -eq 0 ]; then
-            echo "### ✅ Prettier check passed" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "### ❌ Prettier check failed" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            echo "$output" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            exit $status
-          fi
+      - uses: ./.github/actions/setup-env
+
+      - name: Run Prettier
+        run: npm run lint:prettier
 
   lint-eslint:
     name: Lint ESLint
@@ -70,14 +49,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+      - uses: ./.github/actions/setup-env
 
       - name: Run ESLint
         run: npm run lint:eslint
@@ -90,14 +62,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+      - uses: ./.github/actions/setup-env
 
       - name: Run Knip
         run: npm run lint:knip
@@ -110,14 +75,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+      - uses: ./.github/actions/setup-env
 
       - name: Run Madge
         run: npm run lint:madge
@@ -131,14 +89,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+      - uses: ./.github/actions/setup-env
 
       - name: Infer base path
         id: infer-base-path
