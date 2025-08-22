@@ -17,17 +17,20 @@ on:
 jobs:
   _anchors:
     runs-on: ubuntu-latest
-    steps: &setup
-      - name: Checkout repo
+    steps:
+      - &checkout
+        name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - &setup_node
+        name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: npm
 
-      - name: Install dependencies
+      - &install_deps
+        name: Install dependencies
         run: npm ci
         shell: bash
     if: false # dummy job, doesn’t actually run
@@ -37,7 +40,10 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      <<: *setup
+      - *checkout
+      - *setup_node
+      - *install_deps
+
       - name: Run TypeScript Compiler
         run: npm run lint:tsc
 
@@ -46,17 +52,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+      - *checkout
+      - *setup_node
+      - *install_deps
 
       - name: Run Prettier
         run: npm run lint:prettier
@@ -66,17 +64,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+      - *checkout
+      - *setup_node
+      - *install_deps
 
       - name: Run ESLint
         run: npm run lint:eslint
@@ -86,17 +76,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+      - *checkout
+      - *setup_node
+      - *install_deps
 
       - name: Run Knip
         run: npm run lint:knip
@@ -106,17 +88,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+      - *checkout
+      - *setup_node
+      - *install_deps
 
       - name: Run Madge
         run: npm run lint:madge
@@ -127,17 +101,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
+      - *checkout
+      - *setup_node
+      - *install_deps
 
       - name: Infer base path
         id: infer-base-path
