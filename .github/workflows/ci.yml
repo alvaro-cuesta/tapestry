@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - &setup
-        name: Setup Environment
+        name: Setup environment
         id: setup
         uses: ./.github/actions/setup-env
 
@@ -106,15 +106,18 @@ jobs:
         run: |
           npm run build > >(tee build-output.log) 2> >(tee -a build-output.log >&2)
 
-          {
-            echo "### Build Output"
+            {
+            echo "### Build output"
             echo ""
             echo "- **Node version:** ${{ steps.setup.outputs.node_version }}"
             echo "- **NPM version:** ${{ steps.setup.outputs.npm_version }}"
             echo ""
-            cat build-output.log
-          } >> $GITHUB_STEP_SUMMARY
-
+            echo '```'
+            # Strip ANSI colors and escape any triple backticks in the output
+            sed 's/\x1b\[[0-9;]*m//g' build-output.log | sed 's/```/``\x60`/g'
+            echo '```'
+            echo ""
+            } >> $GITHUB_STEP_SUMMARY
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
