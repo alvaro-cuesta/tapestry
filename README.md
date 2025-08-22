@@ -1,4 +1,4 @@
-<h1><img src="./public/pwa-64x64.png" width="24" height="24" /> Tapestry: the best wallpaper generator</h1>
+<h1><a href="https://tapestry.cuesta.dev"><img src="./public/pwa-64x64.png" width="24" height="24" /></a> Tapestry: the best wallpaper generator</h1>
 
 <p align="center">
   <a href="#tapestry-the-best-wallpaper-generator">
@@ -19,7 +19,7 @@ Generate wallpapers/backgrounds for your mobile phone or desktop at a click's di
 patterns, custom palettes, post-processing effects...
 
 <p align="center">
-  <img src="./public/pwa-192x192.png" alt="Tapestry" width="128" height="128" />
+  <a href="https://tapestry.cuesta.dev"><img src="./public/pwa-192x192.png" alt="Tapestry" width="128" height="128" /></a>
   <br />
   <b>Try it now on <a href="https://tapestry.cuesta.dev">tapestry.cuesta.dev</a>!</b>
 </p>
