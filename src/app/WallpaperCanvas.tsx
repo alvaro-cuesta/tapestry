@@ -3,6 +3,7 @@ import { generateWallpaper } from '../generator';
 import type { Pattern } from '../generator/patterns';
 import type { PostFx } from '../generator/postfxs';
 import { makeLogPrefix, makeTaskId } from '../generator/utils';
+import { getErrorMessage } from '../utils/error';
 import styles from './WallpaperCanvas.module.css';
 
 type WallpaperCanvasProps = {
@@ -93,9 +94,7 @@ export const WallpaperCanvas = (props: WallpaperCanvasProps) => {
           }
 
           console.error('Error generating pattern:', error);
-          alert(
-            `Error generating pattern: ${error instanceof Error ? error.message : 'Unknown error'}`,
-          );
+          alert(`Error generating pattern: ${getErrorMessage(error)}`);
         });
     },
     [],

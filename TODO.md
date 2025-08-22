@@ -18,6 +18,7 @@
 - Add more postfxs
 - Better UI/UX
 - Some way to hide UI
+- Help button
 - Download button (at multiple sizes)
 - Consider having normalized coordinates so sizes don't matter that much (think more in vectorial terms)
   - Which also allows patterns/postfxs ignoring width/height

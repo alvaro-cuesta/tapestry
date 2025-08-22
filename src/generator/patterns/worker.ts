@@ -1,3 +1,4 @@
+import { getErrorMessage } from '../../utils/error';
 import type { TaskId } from '../utils';
 import { checkForNonZeroPixels, makeLogPrefix } from '../utils';
 
@@ -36,9 +37,7 @@ export const registerPatternWorker = (
       self.postMessage({ type: 'success', bitmap }, { transfer: [bitmap] });
     } catch (error) {
       console.error(prefix, 'Error in worker callback:', error);
-
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      self.postMessage({ type: 'error', message });
+      self.postMessage({ type: 'error', message: getErrorMessage(error) });
     }
   };
 };

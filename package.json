@@ -20,7 +20,10 @@
     "description": "Generate wallpapers/backgrounds for your mobile phone or desktop at a click's distance.",
     "themeColor": "#0b1b2b",
     "url": "https://tapestry.cuesta.dev",
-    "publicUrlBase": "https://tapestry.cuesta.dev"
+    "publicUrlBase": "https://tapestry.cuesta.dev",
+    "devPort": 5173,
+    "previewPort": 4173,
+    "localhostRunTld": ""
   },
   "homepage": "https://github.com/alvaro-cuesta/tapestry#readme",
   "bugs": "https://github.com/alvaro-cuesta/tapestry/issues",
@@ -34,6 +37,8 @@
     "dev": "vite",
     "build": "tsc --build && vite build",
     "preview": "vite preview",
+    "expose:dev": "cross-env-shell \"ssh -R 80:localhost:$npm_package_config_devPort nokey@localhost.run\"",
+    "expose:preview": "cross-env-shell \"ssh -R 80:localhost:$npm_package_config_previewPort nokey@localhost.run\"",
     "generate:pwa-assets": "pwa-assets-generator",
     "generate:og-assets": "tsx ./bin/generate-og-assets.ts",
     "lint:tsc": "tsc --build --noEmit",
@@ -56,6 +61,7 @@
     "@types/react-dom": "^19.1.7",
     "@vite-pwa/assets-generator": "^1.0.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "cross-env": "^10.0.0",
     "eslint": "^9.33.0",
     "eslint-plugin-react-dom": "^1.52.5",
     "eslint-plugin-react-hooks": "^5.2.0",

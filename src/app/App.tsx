@@ -1,8 +1,11 @@
 import {
-  RiArrowRightUpFill,
+  RiClipboardFill,
   RiDiceLine,
   RiDownload2Fill,
   RiGithubFill,
+  RiShare2Fill,
+  RiShareBoxFill,
+  RiShareFill,
 } from '@remixicon/react';
 import cx from 'classnames';
 import { useCallback, useRef, useState } from 'react';
@@ -11,10 +14,33 @@ import styles from '../app/App.module.css';
 import { PATTERNS } from '../generator/patterns';
 import { POST_FXS } from '../generator/postfxs';
 import useWindowSize from '../hooks/useWindowSize';
+import {
+  copyBlobToClipboard,
+  downloadBlob,
+  openBlobInNewTab,
+  shareBlob,
+} from '../utils/blob';
+import { getErrorMessage } from '../utils/error';
+import {
+  isApple,
+  isClipboardImageWriteSupported,
+  isImageShareSupported,
+} from '../utils/features';
 import { randInt } from '../utils/rand';
 import { CircularButton } from './CircularButton';
 import circularLinkStyles from './CircularLink.module.css';
 import { WallpaperCanvas } from './WallpaperCanvas';
+
+function getImageFilename(width: number, height: number): string {
+  return `wallpaper-${width}x${height}-${Date.now()}.png`;
+}
+
+// Apple and Android have different share icons
+const RiShareGenericFill = isApple
+  ? // This icon is not exactly like Apple's but it's probably coser to what an apple user expects
+    RiShare2Fill
+  : // Use Android's for everything else
+    RiShareFill;
 
 export function App() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -66,35 +92,50 @@ export function App() {
     });
   }, []);
 
+  const handleShareClick = useCallback(() => {
+    getCanvasBlob()
+      .then((blob) => shareBlob(blob, getImageFilename(width, height)))
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === 'AbortError') {
+          return; // Ignore abort errors since they happen on user cancellation
+        }
+
+        console.error('Error sharing image', error);
+        alert(`Error sharing image: ${getErrorMessage(error)}`);
+      });
+  }, [getCanvasBlob, width, height]);
+
+  const handleCopyClick = useCallback(() => {
+    getCanvasBlob()
+      .then(copyBlobToClipboard)
+      .then(() => {
+        alert('Copied to clipboard!');
+      })
+      .catch((error: unknown) => {
+        console.error('Error copying image', error);
+        alert(`Error copying image: ${getErrorMessage(error)}`);
+      });
+  }, [getCanvasBlob]);
+
   const handleOpenInNewTabClick = useCallback(() => {
-    void getCanvasBlob().then((blob) => {
-      const blobUrl = URL.createObjectURL(blob);
-      window.open(blobUrl, '_blank');
-      // @hack If we revoke the URL the opened tab cannot be refreshed or opened in a new tab
-      //
-      // This is a trade-off between memory usage and usability -- I don't expect users to open many tabs so I'll just
-      // leave the URL alive and let the browser handle it when this page closes.
-      //
-      // DataURLs do not have this problem, but they have other tradeoffs (`window.open` does not work with them in
-      // Chrome unless you create an image manually inside the new tab... also they can be large and might be an
-      // issue in some browsers due to URL length limits...)
-      //
-      // URL.revokeObjectURL(blobUrl);
-    });
+    getCanvasBlob()
+      .then(openBlobInNewTab)
+      .catch((error: unknown) => {
+        console.error('Error opening in new tab', error);
+        alert(`Error opening in new tab: ${getErrorMessage(error)}`);
+      });
   }, [getCanvasBlob]);
 
   const handleDownloadClick = useCallback(() => {
-    void getCanvasBlob().then((blob) => {
-      const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.download = `wallpaper-${Date.now()}.png`;
-      link.href = blobUrl;
-      link.click();
-
-      URL.revokeObjectURL(blobUrl);
-    });
-  }, [getCanvasBlob]);
+    getCanvasBlob()
+      .then((blob) => {
+        downloadBlob(blob, getImageFilename(width, height));
+      })
+      .catch((error: unknown) => {
+        console.error('Error downloading', error);
+        alert(`Error downloading: ${getErrorMessage(error)}`);
+      });
+  }, [getCanvasBlob, width, height]);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- we know the index is always valid since it's a <select> on the list itself
   const pattern = PATTERNS[patternIdx]!;
@@ -148,11 +189,29 @@ export function App() {
         </div>
 
         <div className={styles['ui-bottom-right']}>
+          {isImageShareSupported ? (
+            <CircularButton
+              className={styles['ui-button']}
+              onClick={handleShareClick}
+            >
+              <RiShareGenericFill className={cx(styles['ui-button-icon'])} />
+            </CircularButton>
+          ) : null}
+
+          {isClipboardImageWriteSupported ? (
+            <CircularButton
+              className={styles['ui-button']}
+              onClick={handleCopyClick}
+            >
+              <RiClipboardFill className={cx(styles['ui-button-icon'])} />
+            </CircularButton>
+          ) : null}
+
           <CircularButton
             className={styles['ui-button']}
             onClick={handleOpenInNewTabClick}
           >
-            <RiArrowRightUpFill
+            <RiShareBoxFill
               className={cx(
                 styles['ui-button-icon'],
                 styles['download-button-icon'],

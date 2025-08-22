@@ -137,5 +137,17 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         },
       },
     },
+    server: {
+      port: packageJson.config.devPort,
+      allowedHosts: packageJson.config.localhostRunTld
+        ? [`.${packageJson.config.localhostRunTld}`]
+        : [],
+    },
+    preview: {
+      port: packageJson.config.previewPort,
+      allowedHosts: packageJson.config.localhostRunTld
+        ? [`.${packageJson.config.localhostRunTld}`]
+        : [],
+    },
   };
 });
