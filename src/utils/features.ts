@@ -1,6 +1,6 @@
 const ua = navigator.userAgent;
 
-export const isFirefoxMobile = /Firefox/i.test(ua) && /Mobile/i.test(ua);
+const isFirefoxMobile = /Firefox/i.test(ua) && /Mobile/i.test(ua);
 
 export const isApple = /iPad|iPhone|iPod|Macintosh|MacIntel|MacPPC|Mac68K/.test(
   ua,
