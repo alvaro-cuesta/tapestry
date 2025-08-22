@@ -19,6 +19,7 @@ jobs:
     name: Lint ${{ matrix.linter.name }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         linter:
           - { name: 'TypeScript', script: 'lint:tsc' }
@@ -67,11 +68,9 @@ jobs:
             return data.cname
               ? '/'
               : `/${repoName}/`;
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Node.js and NPM versions
-        id: versions
+        id: get-versions
         run: |
           echo "node_version=$(node --version)" >> $GITHUB_OUTPUT
           echo "npm_version=$(npm --version)" >> $GITHUB_OUTPUT
@@ -80,18 +79,19 @@ jobs:
         env:
           BASE: ${{ steps.infer-base-path.outputs.result }}
         run: |
+          set -o pipefail
           npm run build > >(tee build-output.log) 2> >(tee -a build-output.log >&2)
 
-            {
-            echo "- **Node version:** ${{ steps.versions.outputs.node_version }}"
-            echo "- **NPM version:** ${{ steps.versions.outputs.npm_version }}"
+          {
+            echo "- **Node version:** ${{ steps.get-versions.outputs.node_version }}"
+            echo "- **NPM version:** ${{ steps.get-versions.outputs.npm_version }}"
             echo ""
             echo '```'
             # Strip ANSI colors and escape any triple backticks in the output
             sed 's/\x1b\[[0-9;]*m//g' build-output.log | sed 's/```/``\x60`/g'
             echo '```'
             echo ""
-            } >> $GITHUB_STEP_SUMMARY
+          } >> $GITHUB_STEP_SUMMARY
 
       - name: Upload static files as artifact
         id: deployment
@@ -100,7 +100,7 @@ jobs:
           path: dist/
 
   deploy:
-    if: github.repository == 'alvaro-cuesta/tapestry'
+    if: github.repository == 'alvaro-cuesta/tapestry' && github.ref == 'refs/heads/main'
     name: Deploy to GitHub Pages
     needs: build
 
