@@ -26,6 +26,7 @@ jobs:
 
       - &setup
         name: Setup Environment
+        id: setup
         uses: ./.github/actions/setup-env
 
       - name: Run TypeScript Compiler
@@ -99,9 +100,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build static files
-        run: npm run build
         env:
           BASE: ${{ steps.infer-base-path.outputs.result }}
+        shell: bash
+        run: |
+          npm run build > >(tee build-output.log) 2> >(tee -a build-output.log >&2)
+
+          {
+            echo "### Build Output"
+            echo ""
+            echo "- **Node version:** ${{ steps.setup.outputs.node_version }}"
+            echo "- **NPM version:** ${{ steps.setup.outputs.npm_version }}"
+            echo ""
+            cat build-output.log
+          } >> $GITHUB_STEP_SUMMARY
 
       - name: Upload static files as artifact
         id: deployment

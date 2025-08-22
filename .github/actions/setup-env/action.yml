@@ -1,5 +1,8 @@
 name: 'Setup Environment'
 
+outputs:
+
+
 runs:
   using: 'composite'
   steps:
@@ -13,14 +16,8 @@ runs:
       shell: bash
       run: npm ci
 
-    - name: Print Node.js and NPM version
+    - name: Get Node.js and NPM versions
       shell: bash
       run: |
-        NODE_VERSION=$(node --version)
-        NPM_VERSION=$(npm --version)
-        {
-          echo "### Versions"
-          echo ""
-          echo "- **Node.js:** $NODE_VERSION"
-          echo "- **NPM:** $NPM_VERSION"
-        } >> $GITHUB_STEP_SUMMARY
+        echo "node_version=$(node --version)" >> $GITHUB_OUTPUT
+        echo "npm_version=$(npm --version)" >> $GITHUB_OUTPUT
