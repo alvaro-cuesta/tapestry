@@ -15,34 +15,18 @@ on:
       - 'TODO.md'
 
 jobs:
-  _anchors:
-    runs-on: ubuntu-latest
-    steps:
-      - &checkout
-        name: Checkout repo
-        uses: actions/checkout@v4
-
-      - &setup_node
-        name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - &install_deps
-        name: Install dependencies
-        run: npm ci
-        shell: bash
-    if: false # dummy job, doesn’t actually run
-
   lint-tsc:
     name: Lint TypeScript
 
     runs-on: ubuntu-latest
     steps:
-      - *checkout
-      - *setup_node
-      - *install_deps
+      - &checkout
+        name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - &setup
+        name: Setup Environment
+        uses: ./.github/actions/setup-env
 
       - name: Run TypeScript Compiler
         run: npm run lint:tsc
@@ -53,8 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - *checkout
-      - *setup_node
-      - *install_deps
+      - *setup
 
       - name: Run Prettier
         run: npm run lint:prettier
@@ -65,8 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - *checkout
-      - *setup_node
-      - *install_deps
+      - *setup
 
       - name: Run ESLint
         run: npm run lint:eslint
@@ -77,8 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - *checkout
-      - *setup_node
-      - *install_deps
+      - *setup
 
       - name: Run Knip
         run: npm run lint:knip
@@ -89,8 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - *checkout
-      - *setup_node
-      - *install_deps
+      - *setup
 
       - name: Run Madge
         run: npm run lint:madge
@@ -102,8 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - *checkout
-      - *setup_node
-      - *install_deps
+      - *setup
 
       - name: Infer base path
         id: infer-base-path

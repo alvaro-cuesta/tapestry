@@ -1,0 +1,26 @@
+name: 'Setup Environment'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+        cache: npm
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+
+    - name: Print Node.js and NPM version
+      shell: bash
+      run: |
+        NODE_VERSION=$(node --version)
+        NPM_VERSION=$(npm --version)
+        {
+          echo "### Versions"
+          echo ""
+          echo "- **Node.js:** $NODE_VERSION"
+          echo "- **NPM:** $NPM_VERSION"
+        } >> $GITHUB_STEP_SUMMARY
