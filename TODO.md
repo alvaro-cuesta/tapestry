@@ -41,6 +41,8 @@
 - CSS is currently so ugly
 - Spinner for long wallpaper generations
 - Can I somehow have a better interaction with the address bar in mobile? It's terrible when it hides
+- Disable pull to refresh (at least on PWA)
+- Disable pinch-to-zoom (at least on PWA) or make it work on the canvas element instead
 
 ## Chores
 
