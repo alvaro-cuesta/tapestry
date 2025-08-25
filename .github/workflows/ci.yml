@@ -57,17 +57,9 @@ jobs:
       - *setup
       - *install_deps
 
-      - name: Infer base path
-        id: infer-base-path
-        uses: actions/github-script@v7
-        with:
-          result-encoding: string
-          script: |
-            const repoName = "${{ github.repository }}".split('/').pop();
-            const { data } = await github.request('GET /repos/${{ github.repository }}/pages');
-            return data.cname
-              ? '/'
-              : `/${repoName}/`;
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
 
       - name: Get Node.js and NPM versions
         id: get-versions
@@ -77,7 +69,7 @@ jobs:
 
       - name: Build static files
         env:
-          BASE: ${{ steps.infer-base-path.outputs.result }}
+          BASE: ${{ steps.pages.outputs.base_path }}
         run: |
           set -o pipefail
           npm run build > >(tee build-output.log) 2> >(tee -a build-output.log >&2)
