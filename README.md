@@ -1,3 +1,5 @@
+<a id="tapestry-the-best-wallpaper-generator"></a>
+
 <h1><a href="https://tapestry.cuesta.dev"><img src="./public/pwa-64x64.png" width="24" height="24" /></a> Tapestry: the best wallpaper generator</h1>
 
 <p align="center">
